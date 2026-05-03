@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
+  line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-primary { background-color: #1565C0; color: white; }
+.btn-primary:hover { background-color: #0D47A1; }
+
+.btn-secondary {
+  background-color: transparent;
+  border: 2px solid #1565C0;
+  color: #1565C0;
+}
+
+.btn-secondary:hover {
+  background-color: #1565C0;
+  color: white;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1565C0;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.text-center { text-align: center; }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5rem;
+  color: #1565C0;
+}
+
+.error { color: red; font-size: 14px; margin-top: 5px; }
+.success { color: green; font-size: 14px; margin-top: 5px; }

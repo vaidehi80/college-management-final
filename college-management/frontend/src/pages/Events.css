@@ -1,0 +1,80 @@
+.events-section { padding: 60px 20px; }
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.event-list-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  gap: 24px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+  align-items: flex-start;
+  border-left: 5px solid #1565C0;
+  transition: transform 0.2s;
+}
+
+.event-list-card:hover { transform: translateX(5px); }
+
+.event-date-box {
+  background: #1565C0;
+  color: white;
+  border-radius: 10px;
+  padding: 12px 16px;
+  text-align: center;
+  min-width: 70px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.event-day {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.event-month {
+  font-size: 13px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.event-year { font-size: 12px; opacity: 0.8; }
+
+.event-list-info { flex: 1; }
+
+.event-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.event-list-header h3 { color: #333; font-size: 1.1rem; }
+
+.event-category-badge {
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.event-list-info p {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.event-venue {
+  color: #888 !important;
+  margin-top: 8px;
+  font-size: 13px !important;
+}
