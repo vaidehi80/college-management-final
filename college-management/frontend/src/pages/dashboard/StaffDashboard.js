@@ -21,7 +21,7 @@ const StaffDashboard = () => {
     phone: '',
     dateOfBirth: ''
   });
-  const [generatedPassword, setGeneratedPassword] = useState('');
+  
   const [savedStudentInfo, setSavedStudentInfo] = useState(null);
 
   const [noticeForm, setNoticeForm] = useState({
