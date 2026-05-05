@@ -83,7 +83,13 @@ const Admissions = () => {
   }, [user]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    // If user changes SSC year, reset HSC year (because HSC must be after SSC)
+    if (name === 'sscYOP') {
+      setFormData({ ...formData, [name]: value, hscYOP: '' });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSscMarksChange = (field, value) => {
@@ -128,7 +134,8 @@ const Admissions = () => {
     e.preventDefault();
 
     if (!user) {
-      setError('Please login or register first to submit your application.');
+      setError('Please login before submitting the application.');
+      setActiveTab('process');
       return;
     }
 
@@ -138,12 +145,42 @@ const Admissions = () => {
     }
 
     if (sscError || hscError) {
-      setError('Please fix the marks errors before submitting.');
+      setError('Please fix marks validation errors before submitting.');
       return;
     }
 
     if (formData.phone.length !== 10) {
       setError('Please enter a valid 10 digit mobile number.');
+      return;
+    }
+
+    // Validate required documents
+    const requiredDocs = {
+      studentPhoto: 'Student Passport Photo',
+      aadharPhoto: 'Aadhar Card Photo',
+      sscMarksheet: 'SSC (10th) Marksheet',
+      hscMarksheet: 'HSC (12th) Marksheet'
+    };
+
+    for (const [key, label] of Object.entries(requiredDocs)) {
+      if (!uploadedFiles[key]) {
+        setError(`Please upload ${label} before submitting.`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+    }
+
+    // If gap year is selected, gap certificate is required
+    if (formData.hasGap && !uploadedFiles.gapCertificate) {
+      setError('Please upload Gap Certificate (you selected gap year).');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    // If caste is not General, caste certificate is required
+    if (formData.category && formData.category !== 'General' && !uploadedFiles.casteCertificate) {
+      setError('Please upload Caste Certificate.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
@@ -153,28 +190,36 @@ const Admissions = () => {
 
     try {
       const submitData = new FormData();
-      Object.keys(formData).forEach(key => {
-        submitData.append(key, formData[key]);
+
+      Object.keys(formData).forEach((key) => {
+        if (formData[key] !== null && formData[key] !== undefined) {
+          submitData.append(key, formData[key]);
+        }
       });
-      Object.keys(uploadedFiles).forEach(key => {
+
+      Object.keys(uploadedFiles).forEach((key) => {
         if (uploadedFiles[key]) {
           submitData.append(key, uploadedFiles[key]);
         }
       });
 
-      await API.post('/admissions', submitData, {
+      const response = await API.post('/admissions', submitData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
-      setSuccess('✅ Application submitted successfully! You can track your status in your dashboard.');
-      setTimeout(() => {
-        navigate('/student/dashboard');
-      }, 3000);
-
+      if (response.data.success) {
+        setSuccess('Application submitted successfully! Redirecting to dashboard...');
+        setTimeout(() => {
+          navigate('/student/dashboard');
+        }, 2000);
+      } else {
+        setError(response.data.message || 'Failed to submit. Please try again.');
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to submit. Please try again.');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const yearOptions = Array.from({ length: 10 }, (_, i) => 2024 - i);
@@ -707,12 +752,21 @@ const Admissions = () => {
                       <div className="form-group">
                         <label>Year of Passing *</label>
                         <select name="hscYOP" value={formData.hscYOP}
-                          onChange={handleChange} required>
-                          <option value="">Select Year</option>
-                          {yearOptions.map(year => (
-                            <option key={year} value={year}>{year}</option>
-                          ))}
+                          onChange={handleChange} required disabled={!formData.sscYOP}>
+                          <option value="">
+                            {formData.sscYOP ? 'Select Year' : 'Please select SSC year first'}
+                          </option>
+                          {yearOptions
+                            .filter(year => !formData.sscYOP || year > parseInt(formData.sscYOP))
+                            .map(year => (
+                              <option key={year} value={year}>{year}</option>
+                            ))}
                         </select>
+                        {formData.sscYOP && (
+                          <small style={{color:'#666', fontSize:'12px', marginTop:'4px', display:'block'}}>
+                            💡 HSC year must be after SSC year ({formData.sscYOP})
+                          </small>
+                        )}
                       </div>
                     </div>
                     <div className="form-row">

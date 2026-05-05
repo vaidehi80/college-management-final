@@ -9,7 +9,6 @@ import Events from './pages/Events';
 import Gallery from './pages/Gallery';
 import Admissions from './pages/Admissions';
 import Login from './pages/auth/Login';
-import Register from './pages/auth/Register';
 import StudentDashboard from './pages/dashboard/StudentDashboard';
 import StaffDashboard from './pages/dashboard/StaffDashboard';
 import AdminDashboard from './pages/dashboard/AdminDashboard';
@@ -29,7 +28,6 @@ function App() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/admissions" element={<Admissions />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/student/dashboard" element={
           <ProtectedRoute roles={['student']}>
             <StudentDashboard />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
@@ -75,8 +75,8 @@ const Login = () => {
             </button>
           </form>
 
-          <p className="auth-link">
-            Don't have an account? <Link to="/register">Register here</Link>
+          <p className="auth-link" style={{ fontSize: '13px', color: '#666', marginTop: '20px' }}>
+            🎓 New students must contact college staff for registration
           </p>
         </div>
       </div>

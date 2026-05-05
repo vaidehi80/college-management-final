@@ -12,18 +12,25 @@ const StudentDashboard = () => {
   const [myAdmission, setMyAdmission] = useState(null);
   const [admissionLoading, setAdmissionLoading] = useState(true);
 
-  useEffect(() => {
-    API.get('/notices')
-      .then(res => setNotices(res.data.notices || []));
-    API.get('/admissions')
+useEffect(() => {
+  API.get('/notices')
+    .then(res => setNotices(res.data.notices || []));
+
+  if (user?.email) {
+    API.get(`/admissions/by-email/${user.email}`)
       .then(res => {
-        const all = res.data.admissions || [];
-        const mine = all.find(a => a.email === user?.email);
-        if (mine) setMyAdmission(mine);
+        if (res.data.success) {
+          setMyAdmission(res.data.admission);
+        }
         setAdmissionLoading(false);
       })
-      .catch(() => setAdmissionLoading(false));
-  }, [user]);
+      .catch(() => {
+        setAdmissionLoading(false);
+      });
+  } else {
+    setAdmissionLoading(false);
+  }
+}, [user]);
 
   const handleLogout = () => {
     logout();

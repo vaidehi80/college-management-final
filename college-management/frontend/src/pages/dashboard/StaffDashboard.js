@@ -9,8 +9,20 @@ const StaffDashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('home');
   const [students, setStudents] = useState([]);
+  const [studentUsers, setStudentUsers] = useState([]);
   const [notices, setNotices] = useState([]);
   const [message, setMessage] = useState('');
+
+  const [studentForm, setStudentForm] = useState({
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    dateOfBirth: ''
+  });
+  const [generatedPassword, setGeneratedPassword] = useState('');
+  const [savedStudentInfo, setSavedStudentInfo] = useState(null);
 
   const [noticeForm, setNoticeForm] = useState({
     title: '',
@@ -27,6 +39,7 @@ const StaffDashboard = () => {
 
   useEffect(() => {
     API.get('/notices').then(res => setNotices(res.data.notices || []));
+    API.get('/auth/students').then(res => setStudentUsers(res.data.students || [])).catch(() => {});
     API.get('/students')
       .then(res => {
         const list = res.data.students || [];
@@ -91,8 +104,51 @@ const StaffDashboard = () => {
     );
   };
 
+  // ===== REGISTER NEW STUDENT =====
+  const handleStudentRegister = async (e) => {
+    e.preventDefault();
+    if (!studentForm.firstName || !studentForm.email || !studentForm.dateOfBirth) {
+      showMessage('❌ First name, email and DOB are required.');
+      return;
+    }
+    try {
+      const { data } = await API.post('/auth/register-student', studentForm);
+      setGeneratedPassword(data.generatedPassword);
+      setSavedStudentInfo({
+        name: data.user.name,
+        email: data.user.email,
+        password: data.generatedPassword
+      });
+      setStudentForm({
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        dateOfBirth: ''
+      });
+      // Refresh students list
+      API.get('/auth/students').then(res => setStudentUsers(res.data.students || []));
+      showMessage('✅ Student registered successfully!');
+    } catch (err) {
+      showMessage('❌ ' + (err.response?.data?.message || 'Failed to register student.'));
+    }
+  };
+
+  const handleDeleteStudentUser = async (id) => {
+    if (!window.confirm('Delete this student account? This cannot be undone.')) return;
+    try {
+      await API.delete(`/auth/students/${id}`);
+      showMessage('✅ Student deleted!');
+      API.get('/auth/students').then(res => setStudentUsers(res.data.students || []));
+    } catch (err) {
+      showMessage('❌ Failed to delete student.');
+    }
+  };
+
   const tabs = [
     { id: 'home', label: '🏠 Dashboard' },
+    { id: 'add-student', label: '➕ Register Student' },
     { id: 'students', label: '👩‍🎓 Students' },
     { id: 'attendance', label: '📋 Attendance' },
     { id: 'notices', label: '📢 Post Notice' },
@@ -185,16 +241,138 @@ const StaffDashboard = () => {
           )}
 
           {/* STUDENTS TAB */}
+          {/* ============ REGISTER STUDENT TAB ============ */}
+          {activeTab === 'add-student' && (
+            <div>
+              <div className="form-card">
+                <h3 style={{ color: '#1565C0', marginBottom: '8px' }}>➕ Register New Student</h3>
+                <p style={{ color: '#666', fontSize: '14px', marginBottom: '20px' }}>
+                  Fill in basic details. Password will be auto-generated using first 4 letters of first name + DD + YY.
+                </p>
+
+                {/* Show generated credentials */}
+                {savedStudentInfo && (
+                  <div style={{
+                    background: '#d1fae5',
+                    padding: '20px',
+                    borderRadius: '10px',
+                    border: '2px solid #10b981',
+                    marginBottom: '24px'
+                  }}>
+                    <h4 style={{ color: '#065f46', marginBottom: '12px' }}>✅ Student Account Created!</h4>
+                    <p><strong>📛 Name:</strong> {savedStudentInfo.name}</p>
+                    <p><strong>📧 Email:</strong> {savedStudentInfo.email}</p>
+                    <p style={{ marginTop: '8px' }}>
+                      <strong>🔑 Password:</strong>
+                      <span style={{
+                        background: '#fff', padding: '4px 12px', borderRadius: '6px',
+                        marginLeft: '8px', fontFamily: 'monospace', fontSize: '16px',
+                        fontWeight: 'bold', color: '#1565C0'
+                      }}>
+                        {savedStudentInfo.password}
+                      </span>
+                    </p>
+                    <p style={{ marginTop: '12px', fontSize: '13px', color: '#065f46' }}>
+                      💡 <strong>Important:</strong> Tell this password to the student manually. It won't be shown again!
+                    </p>
+                    <button
+                      className="btn btn-secondary"
+                      style={{ marginTop: '12px', fontSize: '13px' }}
+                      onClick={() => setSavedStudentInfo(null)}
+                    >Dismiss</button>
+                  </div>
+                )}
+
+                <form onSubmit={handleStudentRegister}>
+                  <div className="form-row-dash">
+                    <div className="form-group">
+                      <label>First Name *</label>
+                      <input type="text" placeholder="Enter first name"
+                        value={studentForm.firstName}
+                        onChange={e => setStudentForm({ ...studentForm, firstName: e.target.value })}
+                        required />
+                    </div>
+                    <div className="form-group">
+                      <label>Middle Name</label>
+                      <input type="text" placeholder="Enter middle name"
+                        value={studentForm.middleName}
+                        onChange={e => setStudentForm({ ...studentForm, middleName: e.target.value })} />
+                    </div>
+                  </div>
+                  <div className="form-row-dash">
+                    <div className="form-group">
+                      <label>Last Name</label>
+                      <input type="text" placeholder="Enter last name"
+                        value={studentForm.lastName}
+                        onChange={e => setStudentForm({ ...studentForm, lastName: e.target.value })} />
+                    </div>
+                    <div className="form-group">
+                      <label>Email *</label>
+                      <input type="email" placeholder="student@example.com"
+                        value={studentForm.email}
+                        onChange={e => setStudentForm({ ...studentForm, email: e.target.value })}
+                        required />
+                    </div>
+                  </div>
+                  <div className="form-row-dash">
+                    <div className="form-group">
+                      <label>Phone Number</label>
+                      <input type="tel" placeholder="10-digit number" maxLength="10"
+                        value={studentForm.phone}
+                        onChange={e => setStudentForm({ ...studentForm, phone: e.target.value })} />
+                    </div>
+                    <div className="form-group">
+                      <label>Date of Birth *</label>
+                      <input type="date"
+                        value={studentForm.dateOfBirth}
+                        onChange={e => setStudentForm({ ...studentForm, dateOfBirth: e.target.value })}
+                        required />
+                    </div>
+                  </div>
+
+                  {/* Password Preview */}
+                  {studentForm.firstName && studentForm.dateOfBirth && (
+                    <div style={{
+                      background: '#fef3c7', padding: '14px', borderRadius: '8px',
+                      marginBottom: '16px', border: '1px solid #fbbf24'
+                    }}>
+                      <p style={{ fontSize: '14px', color: '#92400e' }}>
+                        🔮 <strong>Password Preview:</strong>{' '}
+                        <span style={{
+                          fontFamily: 'monospace', background: 'white',
+                          padding: '4px 10px', borderRadius: '4px', fontWeight: 'bold'
+                        }}>
+                          {(() => {
+                            const fn = studentForm.firstName.toLowerCase().slice(0, 4);
+                            const d = new Date(studentForm.dateOfBirth);
+                            const dd = String(d.getDate()).padStart(2, '0');
+                            const yy = String(d.getFullYear()).slice(-2);
+                            return `${fn}@${dd}${yy}`;
+                          })()}
+                        </span>
+                      </p>
+                    </div>
+                  )}
+
+                  <button type="submit" className="btn btn-primary">
+                    🚀 Register Student
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
+          {/* ============ END REGISTER STUDENT TAB ============ */}
+
           {activeTab === 'students' && (
             <div>
               <h3 style={{ marginBottom: '20px', color: '#1565C0' }}>
-                All Students ({students.length})
+                All Registered Students ({studentUsers.length})
               </h3>
-              {students.length === 0 ? (
+              {studentUsers.length === 0 ? (
                 <div className="empty-state">
                   <div className="empty-icon">👩‍🎓</div>
-                  <h3>No Students Found</h3>
-                  <p>Students will appear here once added by admin.</p>
+                  <h3>No Students Registered Yet</h3>
+                  <p>Click "Register Student" tab to add a new student.</p>
                 </div>
               ) : (
                 <div className="table-container">
@@ -202,23 +380,25 @@ const StaffDashboard = () => {
                     <thead>
                       <tr>
                         <th>Name</th>
-                        <th>Roll No</th>
-                        <th>Course</th>
-                        <th>Year</th>
                         <th>Email</th>
-                        <th>Status</th>
+                        <th>Phone</th>
+                        <th>DOB</th>
+                        <th>Registered</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {students.map(student => (
-                        <tr key={student._id}>
-                          <td>{student.user?.name}</td>
-                          <td>{student.rollNumber}</td>
-                          <td>{student.course?.name}</td>
-                          <td>Year {student.year}</td>
-                          <td>{student.user?.email}</td>
+                      {studentUsers.map(s => (
+                        <tr key={s._id}>
+                          <td>{s.name}</td>
+                          <td>{s.email}</td>
+                          <td>{s.phone || '-'}</td>
+                          <td>{s.dateOfBirth ? new Date(s.dateOfBirth).toLocaleDateString() : '-'}</td>
+                          <td>{new Date(s.createdAt).toLocaleDateString()}</td>
                           <td>
-                            <span className="status-active">Active</span>
+                            <button className="btn-delete" onClick={() => handleDeleteStudentUser(s._id)}>
+                              Delete
+                            </button>
                           </td>
                         </tr>
                       ))}
