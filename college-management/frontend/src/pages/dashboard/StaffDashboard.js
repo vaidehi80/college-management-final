@@ -113,8 +113,8 @@ const StaffDashboard = () => {
     }
     try {
       const { data } = await API.post('/auth/register-student', studentForm);
-      setGeneratedPassword(data.generatedPassword);
-      setSavedStudentInfo({
+      
+        setSavedStudentInfo({
         name: data.user.name,
         email: data.user.email,
         password: data.generatedPassword
