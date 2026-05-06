@@ -1,7 +1,15 @@
 import axios from 'axios';
 
+// Support both Vite (import.meta.env) and CRA (process.env), with hardcoded fallback
+const API_URL =
+  (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) ||
+  (typeof process !== 'undefined' && process.env?.REACT_APP_API_URL) ||
+  'https://college-management-nnve.onrender.com';
+
+console.log('🔗 API base URL:', API_URL); // Remove this after confirming the fix works
+
 const API = axios.create({
-baseURL: `${process.env.REACT_APP_API_URL}/api`,
+  baseURL: `${API_URL}/api`,
   withCredentials: true,
 });
 
