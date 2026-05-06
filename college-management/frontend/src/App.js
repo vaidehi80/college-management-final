@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';   // ⬅️ ADD THIS IMPORT
+import { AuthProvider } from './context/AuthContext';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -18,7 +18,7 @@ import './App.css';
 
 function App() {
   return (
-    <AuthProvider>                                       {/* ⬅️ WRAP HERE */}
+    <AuthProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -76,7 +76,7 @@ function App() {
           } />
         </Routes>
       </Router>
-    </AuthProvider>                                      {/* ⬅️ CLOSE TAG */}
+    </AuthProvider>
   );
 }
 
