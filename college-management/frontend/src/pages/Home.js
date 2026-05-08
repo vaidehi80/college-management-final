@@ -18,36 +18,48 @@ const Home = () => {
     <div className="home-page">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-overlay"></div>
-        <div className="hero-content">
-          <span className="hero-badge">✨ Affiliated to SNDT Women's University</span>
-          <h1>Late Kalpana Chawala Women's<br /><span className="hero-highlight">Senior College</span></h1>
-          <h2>Empowering Women Through Excellence in Education</h2>
-          <p>Senior Science & Arts College, Gangakhed, Parbhani — Inspiring future leaders, scientists, and changemakers since our inception.</p>
-          <div className="hero-buttons">
-            <Link to="/admissions" className="btn btn-hero-primary">Apply for Admission →</Link>
-            <Link to="/about" className="btn btn-hero-secondary">Discover More</Link>
-          </div>
-          <div className="hero-trust">
-            <div className="trust-item">
-              <strong>500+</strong>
-              <span>Students</span>
-            </div>
-            <div className="trust-divider"></div>
-            <div className="trust-item">
-              <strong>30+</strong>
-              <span>Faculty</span>
-            </div>
-            <div className="trust-divider"></div>
-            <div className="trust-item">
-              <strong>10+</strong>
-              <span>Years</span>
-            </div>
-          </div>
-        </div>
-      </section>
+     {/* Hero Section */}
+<section className="hero" style={{
+  backgroundImage: `linear-gradient(135deg, rgba(13, 27, 62, 0.88) 0%, rgba(21, 101, 192, 0.82) 100%), url(${
+    [
+      'https://images.unsplash.com/photo-1562774053-701939374585?w=1600&q=80',
+      'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=1600&q=80',
+      'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1600&q=80',
+      'https://images.unsplash.com/photo-1607013251379-e6eecfffe234?w=1600&q=80',
+      'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=1600&q=80',
+      'https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=1600&q=80',
+      'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1600&q=80',
+      'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=1600&q=80'
+    ][Math.floor(Math.random() * 8)]
+  })`
+}}>
+  <div className="hero-content">
+    <span className="hero-badge">✨ Affiliated to SNDT Women's University</span>
+    <h1>Late Kalpana Chawala Women's<br /><span className="hero-highlight">Senior College</span></h1>
+    <h2>Empowering Women Through Excellence in Education</h2>
+    <p>Senior Science & Arts College, Gangakhed, Parbhani — Inspiring future leaders, scientists, and changemakers since our inception.</p>
+    <div className="hero-buttons">
+      <Link to="/admissions" className="btn btn-hero-primary">Apply for Admission →</Link>
+      <Link to="/about" className="btn btn-hero-secondary">Discover More</Link>
+    </div>
+    <div className="hero-trust">
+      <div className="trust-item">
+        <strong>500+</strong>
+        <span>Students</span>
+      </div>
+      <div className="trust-divider"></div>
+      <div className="trust-item">
+        <strong>30+</strong>
+        <span>Faculty</span>
+      </div>
+      <div className="trust-divider"></div>
+      <div className="trust-item">
+        <strong>10+</strong>
+        <span>Years</span>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Inspiration Quote Section */}
       <section className="inspiration">
