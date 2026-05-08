@@ -10,8 +10,8 @@ const Home = () => {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    API.get('/notices').then(res => setNotices(res.data.notices?.slice(0, 3) || []));
-    API.get('/courses').then(res => setCourses(res.data.courses?.slice(0, 3) || []));
+    API.get('/notices').then(res => setNotices(res.data.notices?.slice(0, 3) || [])).catch(() => {});
+    API.get('/courses').then(res => setCourses(res.data.courses?.slice(0, 3) || [])).catch(() => {});
   }, []);
 
   return (
@@ -21,12 +21,30 @@ const Home = () => {
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
-          <h1>Late Kalpana Chawla Mahila Senior Science & Arts College</h1>
-          <h2>Gangakhed, Marathwada, Maharashtra</h2>
-          <p>Empowering women through quality education — Affiliated to SNDT Women's University</p>
+          {/* Image placeholder for Kalpana Chawla */}
+          <div className="hero-image-placeholder">
+            <span role="img" aria-label="astronaut">👩‍🚀</span>
+          </div>
+          <h1>Late Kalpana Chawala Women's Senior College</h1>
+          <p className="college-tag">(LKCWSC)</p>
+          <h2>Gangakhed, Parbhani, Maharashtra</h2>
+          <p className="hero-desc">Empowering women through quality education — Affiliated to SNDT Women's University, Mumbai</p>
           <div className="hero-buttons">
             <Link to="/admissions" className="btn btn-primary">Apply Now</Link>
             <Link to="/about" className="btn btn-secondary">Learn More</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* University Affiliation Banner */}
+      <section className="affiliation-banner">
+        <div className="container">
+          <div className="affiliation-content">
+            <div className="sndt-logo-placeholder">🎓</div>
+            <div className="affiliation-text">
+              <h3>Affiliated to SNDT Women's University</h3>
+              <p>Shreemati Nathibai Damodar Thackersey Women's University, Mumbai</p>
+            </div>
           </div>
         </div>
       </section>
@@ -52,18 +70,22 @@ const Home = () => {
       </section>
 
       {/* About Preview */}
-      <section className="about-preview container">
-        <div className="about-text">
-          <h2 className="section-title">About Our College</h2>
-          <p className="section-subtitle">Dedicated to empowering women with quality education</p>
-          <p>Late Kalpana Chawla Mahila Senior Science and Arts College, Gangakhed is committed to providing excellent education to women in the Marathwada region. Named after the legendary astronaut Kalpana Chawla, our college inspires students to reach for the stars.</p>
-          <br />
-          <p>Affiliated to SNDT Women's University and run by Vidyaniketan Sevabhavi Sanstha, we offer undergraduate programs in Science and Arts with experienced faculty and a supportive learning environment.</p>
-          <br />
-          <Link to="/about" className="btn btn-primary">Read More</Link>
-        </div>
-        <div className="about-image">
-          <div className="image-placeholder">🏫</div>
+      <section className="about-preview">
+        <div className="container about-grid">
+          <div className="about-text">
+            <h2 className="section-title">About Our College</h2>
+            <p className="section-subtitle">Dedicated to empowering women with quality education</p>
+            <p>Late Kalpana Chawala Women's Senior College (LKCWSC), Gangakhed is committed to providing excellent education to women in the Marathwada region. Named after the legendary astronaut Kalpana Chawala, our college inspires students to reach for the stars.</p>
+            <p>Affiliated to SNDT Women's University and run by Vidyaniketan Sevabhavi Sanstha, we offer undergraduate programs in Science and Arts with experienced faculty and a supportive learning environment.</p>
+            <Link to="/about" className="btn btn-primary about-btn">Read More</Link>
+          </div>
+          <div className="about-image">
+            {/* College building image placeholder */}
+            <div className="image-placeholder">
+              <span role="img" aria-label="college">🏫</span>
+              <p className="placeholder-text">College Building</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -103,26 +125,52 @@ const Home = () => {
       </section>
 
       {/* Notices */}
-      <section className="notices-preview container">
-        <h2 className="section-title text-center">Latest Notices</h2>
-        <p className="section-subtitle text-center">Stay updated with latest announcements</p>
-        <div className="notices-list">
-          {notices.length > 0 ? notices.map(notice => (
-            <div className="notice-item" key={notice._id}>
-              <span className="notice-badge">{notice.category}</span>
-              <h4>{notice.title}</h4>
-              <p>{new Date(notice.createdAt).toLocaleDateString()}</p>
-            </div>
-          )) : (
-            <div className="notice-item">
-              <span className="notice-badge">general</span>
-              <h4>Welcome to Late Kalpana Chawla Mahila Senior Science & Arts College</h4>
-              <p>Admissions open for 2024-25 academic year</p>
-            </div>
-          )}
+      <section className="notices-preview">
+        <div className="container">
+          <h2 className="section-title text-center">Latest Notices</h2>
+          <p className="section-subtitle text-center">Stay updated with latest announcements</p>
+          <div className="notices-list">
+            {notices.length > 0 ? notices.map(notice => (
+              <div className="notice-item" key={notice._id}>
+                <span className="notice-badge">{notice.category}</span>
+                <h4>{notice.title}</h4>
+                <p>{new Date(notice.createdAt).toLocaleDateString()}</p>
+              </div>
+            )) : (
+              <div className="notice-item">
+                <span className="notice-badge">general</span>
+                <h4>Welcome to Late Kalpana Chawala Women's Senior College</h4>
+                <p>Admissions open for 2025-26 academic year</p>
+              </div>
+            )}
+          </div>
+          <div className="text-center notices-cta">
+            <Link to="/notices" className="btn btn-primary">View All Notices</Link>
+          </div>
         </div>
-        <div className="text-center" style={{marginTop:'20px'}}>
-          <Link to="/notices" className="btn btn-primary">View All Notices</Link>
+      </section>
+
+      {/* Contact Quick Info */}
+      <section className="contact-quick">
+        <div className="container">
+          <h2 className="section-title text-center">Get In Touch</h2>
+          <div className="contact-cards">
+            <div className="contact-card">
+              <div className="contact-icon">📞</div>
+              <h4>Call Us</h4>
+              <p><a href="tel:9307162914">9307162914</a></p>
+            </div>
+            <div className="contact-card">
+              <div className="contact-icon">📍</div>
+              <h4>Visit Us</h4>
+              <p>Lecture Colony, Behind Sant Janabai School, Gangakhed, Parbhani, Maharashtra 431514</p>
+            </div>
+            <div className="contact-card">
+              <div className="contact-icon">✉️</div>
+              <h4>Email Us</h4>
+              <p><a href="mailto:info@lkcwsc.edu.in">info@lkcwsc.edu.in</a></p>
+            </div>
+          </div>
         </div>
       </section>
 
