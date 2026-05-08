@@ -7,11 +7,10 @@ import './Home.css';
 
 const Home = () => {
   const [notices, setNotices] = useState([]);
-  const [courses, setCourses] = useState([]);
-
+ 
   useEffect(() => {
     API.get('/notices').then(res => setNotices(res.data.notices?.slice(0, 3) || [])).catch(() => {});
-    API.get('/courses').then(res => setCourses(res.data.courses?.slice(0, 3) || [])).catch(() => {});
+   
   }, []);
 
   return (
