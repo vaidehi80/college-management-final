@@ -81,3 +81,281 @@ const Home = () => {
           <div className="features-grid">
             <div className="feature-card">
               <div className="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+              </div>
+              <h3>Quality Education</h3>
+              <p>Affiliated to SNDT Women's University with rigorous, industry-relevant curriculum in Arts and Sciences.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              </div>
+              <h3>Experienced Faculty</h3>
+              <p>30+ qualified educators dedicated to mentoring students and unlocking their full potential.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              </div>
+              <h3>Modern Facilities</h3>
+              <p>Well-equipped laboratories, library, and classrooms designed for collaborative learning.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-1.06 13.54L7.4 12l1.41-1.41 2.12 2.12 4.24-4.24 1.41 1.41-5.64 5.66z"/></svg>
+              </div>
+              <h3>Safe Environment</h3>
+              <p>A secure, supportive campus exclusively for women, fostering confidence and growth.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.29.02-.58.05-.86 2.36-1.05 4.23-2.98 5.21-5.37C11.07 8.33 14.05 10 17.42 10c.78 0 1.53-.09 2.25-.26.21.71.33 1.47.33 2.26 0 4.41-3.59 8-8 8z"/></svg>
+              </div>
+              <h3>Holistic Development</h3>
+              <p>Sports, cultural events, and extracurricular activities for all-round personality development.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+              </div>
+              <h3>Scholarships</h3>
+              <p>Merit-based and need-based financial assistance ensuring no deserving student is left behind.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Courses Preview */}
+      <section className="courses-preview">
+        <div className="container">
+          <div className="section-header text-center">
+            <span className="section-tag">Academic Programs</span>
+            <h2 className="section-title">Choose Your Path</h2>
+            <p className="section-subtitle">Undergraduate programs designed to shape tomorrow's leaders</p>
+          </div>
+          <div className="courses-grid">
+            <div className="course-card">
+              <div className="course-card-image" style={{backgroundImage: "url('https://images.unsplash.com/photo-1532012197267-da84d127e765?w=600&q=80')"}}>
+                <div className="course-card-overlay"></div>
+                <span className="course-tag">3 Years</span>
+              </div>
+              <div className="course-card-body">
+                <h3>Bachelor of Arts</h3>
+                <p>Explore literature, history, sociology, and the humanities — building strong analytical and communication skills.</p>
+                <Link to="/admissions?course=BA" className="course-link">Apply Now →</Link>
+              </div>
+            </div>
+            <div className="course-card">
+              <div className="course-card-image" style={{backgroundImage: "url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&q=80')"}}>
+                <div className="course-card-overlay"></div>
+                <span className="course-tag">3 Years</span>
+              </div>
+              <div className="course-card-body">
+                <h3>Bachelor of Science</h3>
+                <p>Dive into physics, chemistry, biology and mathematics — fostering scientific thinking and innovation.</p>
+                <Link to="/admissions?course=BSc" className="course-link">Apply Now →</Link>
+              </div>
+            </div>
+            <div className="course-card">
+              <div className="course-card-image" style={{backgroundImage: "url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80')"}}>
+                <div className="course-card-overlay"></div>
+                <span className="course-tag">View All</span>
+              </div>
+              <div className="course-card-body">
+                <h3>All Programs</h3>
+                <p>Browse our complete list of undergraduate courses, subject combinations, and admission criteria.</p>
+                <Link to="/courses" className="course-link">View Courses →</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Principal's Message */}
+      <section className="principal-message">
+        <div className="container">
+          <div className="principal-grid">
+            <div className="principal-image">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&q=80" alt="Principal" />
+            </div>
+            <div className="principal-content">
+              <span className="section-tag">Principal's Message</span>
+              <h2>"Education is the most powerful weapon we can give our daughters."</h2>
+              <p>At Late Kalpana Chawala Women's Senior College, we believe every young woman deserves the chance to dream big and achieve more. For over a decade, we have been empowering girls from Marathwada with knowledge, skills, and the confidence to compete with the best in the world.</p>
+              <p>We invite you to join our family — to learn, grow, and become the change-makers our nation needs.</p>
+              <div className="principal-signature">
+                <strong>Principal</strong>
+                <span>LKCWSC Gangakhed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Notices */}
+      <section className="notices-preview">
+        <div className="container">
+          <div className="section-header text-center">
+            <span className="section-tag">Stay Updated</span>
+            <h2 className="section-title">Latest Notices & Announcements</h2>
+            <p className="section-subtitle">Important updates from the college administration</p>
+          </div>
+          <div className="notices-list">
+            {notices.length > 0 ? notices.map(notice => (
+              <div className="notice-item" key={notice._id}>
+                <div className="notice-date">
+                  <span className="notice-day">{new Date(notice.createdAt).getDate()}</span>
+                  <span className="notice-month">{new Date(notice.createdAt).toLocaleString('default', { month: 'short' })}</span>
+                </div>
+                <div className="notice-content">
+                  <span className="notice-badge">{notice.category}</span>
+                  <h4>{notice.title}</h4>
+                </div>
+                <div className="notice-arrow">→</div>
+              </div>
+            )) : (
+              <>
+                <div className="notice-item">
+                  <div className="notice-date">
+                    <span className="notice-day">01</span>
+                    <span className="notice-month">May</span>
+                  </div>
+                  <div className="notice-content">
+                    <span className="notice-badge">Admissions</span>
+                    <h4>Admissions Open for 2026-27 Academic Year</h4>
+                  </div>
+                  <div className="notice-arrow">→</div>
+                </div>
+                <div className="notice-item">
+                  <div className="notice-date">
+                    <span className="notice-day">15</span>
+                    <span className="notice-month">Apr</span>
+                  </div>
+                  <div className="notice-content">
+                    <span className="notice-badge">Examination</span>
+                    <h4>Final Examination Schedule Released</h4>
+                  </div>
+                  <div className="notice-arrow">→</div>
+                </div>
+                <div className="notice-item">
+                  <div className="notice-date">
+                    <span className="notice-day">10</span>
+                    <span className="notice-month">Apr</span>
+                  </div>
+                  <div className="notice-content">
+                    <span className="notice-badge">Event</span>
+                    <h4>Annual Cultural Fest — Registration Open</h4>
+                  </div>
+                  <div className="notice-arrow">→</div>
+                </div>
+              </>
+            )}
+          </div>
+          <div className="text-center" style={{marginTop:'40px'}}>
+            <Link to="/notices" className="btn btn-primary">View All Notices →</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="testimonials">
+        <div className="container">
+          <div className="section-header text-center">
+            <span className="section-tag" style={{color:'#fff', background:'rgba(255,255,255,0.15)'}}>Student Voices</span>
+            <h2 className="section-title" style={{color:'#fff'}}>Hear From Our Alumni</h2>
+            <p className="section-subtitle" style={{color:'rgba(255,255,255,0.85)'}}>Stories of transformation, growth, and success</p>
+          </div>
+          <div className="testimonials-grid">
+            <div className="testimonial-card">
+              <div className="testimonial-stars">★★★★★</div>
+              <p>"This college didn't just teach me Science — it taught me to dream. The faculty believed in me when I doubted myself. Today, I'm pursuing my Master's at a top university."</p>
+              <div className="testimonial-author">
+                <div className="testimonial-avatar">PS</div>
+                <div>
+                  <strong>Priyanka Shinde</strong>
+                  <span>BSc Graduate, 2023</span>
+                </div>
+              </div>
+            </div>
+            <div className="testimonial-card">
+              <div className="testimonial-stars">★★★★★</div>
+              <p>"The supportive environment here is unmatched. I gained confidence, made lifelong friends, and developed skills that helped me clear my government job exam."</p>
+              <div className="testimonial-author">
+                <div className="testimonial-avatar">AK</div>
+                <div>
+                  <strong>Aditi Kulkarni</strong>
+                  <span>BA Graduate, 2022</span>
+                </div>
+              </div>
+            </div>
+            <div className="testimonial-card">
+              <div className="testimonial-stars">★★★★★</div>
+              <p>"Coming from a small village, I was nervous. But the teachers and seniors made me feel at home. My time here shaped who I am today — independent and ambitious."</p>
+              <div className="testimonial-author">
+                <div className="testimonial-avatar">SM</div>
+                <div>
+                  <strong>Sneha More</strong>
+                  <span>BA Graduate, 2024</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Campus Gallery Preview */}
+      <section className="gallery-preview">
+        <div className="container">
+          <div className="section-header text-center">
+            <span className="section-tag">Campus Life</span>
+            <h2 className="section-title">A Glimpse Into Our College</h2>
+            <p className="section-subtitle">Where learning meets community</p>
+          </div>
+          <div className="gallery-grid">
+            <div className="gallery-item gallery-large" style={{backgroundImage: "url('https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80')"}}>
+              <div className="gallery-caption">Main Campus</div>
+            </div>
+            <div className="gallery-item" style={{backgroundImage: "url('https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=600&q=80')"}}>
+              <div className="gallery-caption">Library</div>
+            </div>
+            <div className="gallery-item" style={{backgroundImage: "url('https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=600&q=80')"}}>
+              <div className="gallery-caption">Laboratories</div>
+            </div>
+            <div className="gallery-item" style={{backgroundImage: "url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80')"}}>
+              <div className="gallery-caption">Classrooms</div>
+            </div>
+            <div className="gallery-item" style={{backgroundImage: "url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80')"}}>
+              <div className="gallery-caption">Events</div>
+            </div>
+          </div>
+          <div className="text-center" style={{marginTop:'40px'}}>
+            <Link to="/gallery" className="btn btn-primary">View Full Gallery →</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="cta-section">
+        <div className="cta-bg-pattern"></div>
+        <div className="cta-content">
+          <span className="cta-tag">Begin Your Journey</span>
+          <h2>Your future starts here.<br />Apply for Admission Today.</h2>
+          <p>Join 500+ ambitious women who are writing their own success stories at LKCWSC. Limited seats available for 2026-27.</p>
+          <div className="hero-buttons">
+            <Link to="/admissions" className="btn btn-hero-primary">Apply Now →</Link>
+            <Link to="/contact" className="btn btn-hero-secondary">Talk to Us</Link>
+          </div>
+          <div className="cta-contact">
+            <a href="tel:9307162914" className="cta-phone">
+              📞 <strong>9307162914</strong>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Home;
