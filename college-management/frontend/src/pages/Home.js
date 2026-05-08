@@ -18,7 +18,7 @@ const Home = () => {
     <div className="home-page">
       <Navbar />
 
-     {/* Hero Section */}
+{/* Hero Section */}
 <section className="hero" style={{
   backgroundImage: `linear-gradient(135deg, rgba(13, 27, 62, 0.88) 0%, rgba(21, 101, 192, 0.82) 100%), url(${
     [
