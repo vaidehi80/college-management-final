@@ -32,7 +32,7 @@ const Home = () => {
           <span className="hero-badge">✨ Affiliated to SNDT Women's University,mumbai</span>
           <h1>Late Kalpana Chawala Women's<br /><span className="hero-highlight">Senior College</span></h1>
           <h2>Empowering Women Through Excellence in Education</h2>
-          <p>Senior Science & Arts College, Gangakhed, Parbhani — Inspiring future leaders, scientists, and changemakers since our inception.</p>
+          <p>Senior Science & Arts College, Gangakhed, Parbhani </p>
           <div className="hero-buttons">
             <Link to="/admissions" className="btn btn-hero-primary">Apply for Admission →</Link>
             <Link to="/about" className="btn btn-hero-secondary">Discover More</Link>
