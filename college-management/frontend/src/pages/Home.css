@@ -752,4 +752,7 @@
 }
 
 @media (max-width: 480px) {
-  .contain
+  .container { padding: 0 16px; }
+  .hero-content h1 { letter-spacing: -0.5px; }
+  .feature-card, .course-card-body, .testimonial-card { padding: 24px 20px; }
+}
