@@ -24,7 +24,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-brand">
         <Link to="/" onClick={() => setMenuOpen(false)}>
-          <img src="/college-logo.png.jpeg" alt="LKCWSC Logo" className="brand-logo-img" />
+          <img src="/college-logo.png" alt="LKCWSC Logo" className="brand-logo-img" />
           <div className="brand-text">
             <span className="brand-name">Late Kalpana Chawala Women's Senior College</span>
             <span className="brand-sub">Senior Science & Arts College, Gangakhed</span>
