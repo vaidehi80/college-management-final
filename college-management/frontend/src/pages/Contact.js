@@ -57,7 +57,7 @@ const Contact = () => {
                 <div>
                   <h4>Address</h4>
                   <p>Late Kalpana Chawla Mahila Senior Science & Arts College</p>
-                  <p>Gangakhed, Marathwada, Maharashtra - 431514</p>
+                  <p>Gangakhed, Maharashtra - 431514</p>
                 </div>
               </div>
 
@@ -65,7 +65,7 @@ const Contact = () => {
                 <span className="contact-icon">📞</span>
                 <div>
                   <h4>Phone</h4>
-                  <p>+91 XXXXXXXXXX</p>
+                  <p>+91 9307162914</p>
                 </div>
               </div>
 
