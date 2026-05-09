@@ -46,18 +46,18 @@ const About = () => {
       text: aboutData.history,
       photo: aboutData.historyPhoto
     },
+   {
+  icon: '🎯',
+  title: 'Our Vision',
+  text: 'To be a centre of excellence in women’s higher education that empowers every girl and woman of the Marathwada region to become enlightened, socially responsible leaders who contribute to nation-building through quality education.',
+  photo: aboutData.visionPhoto
+}
     {
-      icon: '🎯',
-      title: 'Our Vision',
-      text: aboutData.vision,
-      photo: aboutData.visionPhoto
-    },
-    {
-      icon: '🚀',
-      title: 'Our Mission',
-      text: aboutData.mission,
-      photo: aboutData.missionPhoto
-    },
+  icon: '🚀',
+  title: 'Our Mission',
+  text: 'Provide accessible higher education, develop skilled and independent women, foster ethical values, promote leadership and community engagement, and uphold academic excellence.',
+  photo: aboutData.missionPhoto
+}
     {
       icon: '🏆',
       title: 'Our Achievements',
@@ -122,10 +122,16 @@ const About = () => {
             </div>
             <div className="principal-message">
               <h3>From the Desk of the Principal</h3>
-              <p>"{aboutData.principalMessage}"</p>
+              <p>
+"At Late Kalpana Chawala Women’s Senior College, we believe education is not merely about acquiring knowledge but about shaping character, building confidence, and preparing young women to face the challenges of the modern world.
+
+Our institution is committed to providing quality education in Arts and Science while creating an environment that encourages critical thinking, creativity, and lifelong learning.
+
+Inspired by the vision of Kalpana Chawla, we encourage our students to dream big, work hard, and contribute positively to society and nation-building."
+</p>
               <br />
               <p className="principal-name">
-                — {aboutData.principalName}
+                — {aboutData.principalName || 'Principal'}
               </p>
               <p style={{ fontSize: '13px', color: '#666' }}>
                 Late Kalpana Chawla Mahila Senior Science & Arts College, Gangakhed
