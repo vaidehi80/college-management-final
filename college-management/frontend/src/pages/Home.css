@@ -658,3 +658,52 @@
   .hero-logo { width: 55px; height: 55px; }
   .feature-card, .course-card-body, .testimonial-card { padding: 24px 20px; }
 }
+/* ===== SNDT Logo + Badge inline ===== */
+.hero-affiliation {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 8px 20px 8px 8px;
+  border-radius: 50px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hero-affiliation .hero-badge {
+  background: transparent;
+  border: none;
+  backdrop-filter: none;
+  padding: 0;
+  margin-bottom: 0;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.affiliation-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  padding: 3px;
+  object-fit: contain;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 480px) {
+  .hero-affiliation {
+    padding: 6px 16px 6px 6px;
+    gap: 10px;
+  }
+  .affiliation-logo {
+    width: 34px;
+    height: 34px;
+  }
+  .hero-affiliation .hero-badge {
+    font-size: 11px;
+  }
+}
