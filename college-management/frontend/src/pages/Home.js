@@ -19,7 +19,7 @@ const Home = () => {
    
     {/* SNDT Logo Only */}
 <div className="hero-logos">
-  <img src="/sndt-logo.png.jpeg" alt="SNDT Logo" className="hero-logo" />
+  <img src="/sndt-logo.png" alt="SNDT Logo" className="hero-logo" />
 </div>
     <span className="hero-badge">✨ Affiliated to SNDT Women's University, Mumbai</span>
     <h1>Late Kalpana Chawala Women's<br /><span className="hero-highlight">Senior College</span></h1>
