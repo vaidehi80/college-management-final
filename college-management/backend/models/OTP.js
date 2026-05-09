@@ -5,7 +5,7 @@ const otpSchema = new mongoose.Schema({
   otp: { type: String, required: true },
   purpose: { type: String, enum: ['login', 'register'], default: 'login' },
   attempts: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now, expires: 300 } // Auto-delete after 5 minutes
+  createdAt: { type: Date, default: Date.now, expires: 300 }
 });
 
 module.exports = mongoose.model('OTP', otpSchema);
