@@ -16,7 +16,7 @@ const Home = () => {
 }}>
   <div className="hero-content">
 
-    {/* 2 LOGOS SECTION */}
+   
     {/* SNDT Logo Only */}
 <div className="hero-logos">
   <img src="/sndt-logo.png.jpeg" alt="SNDT Logo" className="hero-logo" />
