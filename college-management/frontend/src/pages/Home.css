@@ -375,29 +375,50 @@
 }
 .course-link:hover { gap: 12px; }
 
-/* ===== Principal Message ===== */
-.principal-message {
+/* ===== Principal Message V2 (Without Photo) ===== */
+.principal-message-v2 {
   padding: 100px 0;
   background: #f8f9ff;
 }
 
-.principal-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 60px;
-  align-items: center;
-}
-
-.principal-image img {
-  width: 100%;
-  max-width: 380px;
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(13, 27, 62, 0.15);
-  display: block;
+.principal-quote-card {
+  max-width: 850px;
   margin: 0 auto;
+  background: white;
+  padding: 60px 50px;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(13, 27, 62, 0.1);
+  border-top: 5px solid #1565C0;
 }
 
-.principal-content h2 {
+.quote-icon {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #1565C0, #0D47A1);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  line-height: 0.5;
+  padding-top: 18px;
+  box-shadow: 0 8px 20px rgba(21, 101, 192, 0.3);
+}
+
+.principal-quote-card .section-tag {
+  margin-top: 16px;
+}
+
+.principal-quote-card h2 {
   font-size: clamp(1.4rem, 3vw, 1.9rem);
   color: #0D1B3E;
   line-height: 1.4;
@@ -405,110 +426,36 @@
   margin-bottom: 24px;
   font-weight: 700;
 }
-.principal-content p {
+
+.principal-quote-card p {
   color: #555;
   line-height: 1.8;
   margin-bottom: 16px;
+  font-size: 1.02rem;
 }
 
-.principal-signature {
-  margin-top: 24px;
-  padding-top: 20px;
+.principal-quote-card .principal-signature {
+  margin-top: 30px;
+  padding-top: 24px;
   border-top: 2px solid #e3e8f5;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
-.principal-signature strong {
+.principal-quote-card .principal-signature strong {
   color: #0D1B3E;
   font-size: 1.05rem;
 }
-.principal-signature span {
+.principal-quote-card .principal-signature span {
   color: #666;
   font-size: 0.9rem;
-  margin-top: 2px;
-}
-
-/* ===== Notices ===== */
-.notices-preview {
-  padding: 100px 0;
-  background: white;
-}
-
-.notices-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  max-width: 850px;
-  margin: 0 auto;
-}
-
-.notice-item {
-  background: white;
-  border: 1px solid #eef0f5;
-  padding: 20px 24px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  transition: all 0.3s;
-  cursor: pointer;
-}
-.notice-item:hover {
-  border-color: #1565C0;
-  transform: translateX(6px);
-  box-shadow: 0 8px 20px rgba(21, 101, 192, 0.08);
-}
-
-.notice-date {
-  flex-shrink: 0;
-  width: 60px;
-  text-align: center;
-  border-right: 2px solid #e3e8f5;
-  padding-right: 20px;
-}
-.notice-day {
-  display: block;
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: #1565C0;
-  line-height: 1;
-}
-.notice-month {
-  display: block;
-  font-size: 0.75rem;
-  color: #666;
-  text-transform: uppercase;
   margin-top: 4px;
-  font-weight: 600;
 }
 
-.notice-content { flex: 1; }
-.notice-badge {
-  display: inline-block;
-  background: rgba(21, 101, 192, 0.1);
-  color: #1565C0;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-  letter-spacing: 0.3px;
+@media (max-width: 768px) {
+  .principal-message-v2 { padding: 70px 0; }
+  .principal-quote-card { padding: 50px 24px; }
 }
-.notice-content h4 {
-  color: #0D1B3E;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.notice-arrow {
-  color: #1565C0;
-  font-size: 1.4rem;
-  font-weight: 700;
-  transition: transform 0.3s;
-}
-.notice-item:hover .notice-arrow { transform: translateX(6px); }
 
 /* ===== Testimonials ===== */
 .testimonials {
