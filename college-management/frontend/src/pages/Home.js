@@ -177,7 +177,11 @@ const Home = () => {
             <div className="quote-icon">"</div>
             <span className="section-tag">Principal's Message</span>
             <h2>Education is the most powerful weapon we can give our daughters.</h2>
-            <p>At Late Kalpana Chawala Women's Senior College, we believe every young woman deserves the chance to dream big and achieve more. For over a decade, we have been empowering girls from Marathwada with knowledge, skills, and the confidence to compete with the best in the world.</p>
+            <p>Education isn’t just about memorizing facts; it’s about training your mind how to think. Every late-night study session and every difficult problem you solve is building a "mental muscle" that no one can ever take away from you.
+​Three Truths for the Journey:
+​Growth lives in the struggle. If it feels hard, it means you’re leveling up. Real progress happens at the edge of your comfort zone.
+​Consistency beats intensity. You don’t have to be a genius every single day. You just have to show up. Small, daily efforts compound into massive results over time.
+​Your "Current" is not your "Future." A single grade or a bad semester is a data point, not a destination. You are a work in progress, and the story isn't over yet.</p>
             <p>We invite you to join our family — to learn, grow, and become the change-makers our nation needs.</p>
             <div className="principal-signature">
               <strong>Principal</strong>
