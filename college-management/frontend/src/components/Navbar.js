@@ -34,8 +34,15 @@ const Navbar = () => {
       <div className={`navbar-links ${menuOpen ? 'open' : ''}`}>
         <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
         <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
-        <Link to="/courses" onClick={() => setMenuOpen(false)}>Courses</Link>
-        <Link to="/faculty" onClick={() => setMenuOpen(false)}>Faculty</Link>
+        <div className="dropdown">
+  <span className="dropdown-title">Academic</span>
+  <div className="dropdown-menu">
+    <Link to="/courses" onClick={() => setMenuOpen(false)}>Courses</Link>
+    <Link to="/faculty" onClick={() => setMenuOpen(false)}>Faculty</Link>
+    <Link to="/resources" onClick={() => setMenuOpen(false)}>Resources</Link>
+    <Link to="/examination" onClick={() => setMenuOpen(false)}>Examination</Link>
+  </div>
+</div>
         <Link to="/gallery" onClick={() => setMenuOpen(false)}>Gallery</Link>
         <Link to="/events" onClick={() => setMenuOpen(false)}>Events</Link>
         <Link to="/admissions" onClick={() => setMenuOpen(false)}>Admissions</Link>
