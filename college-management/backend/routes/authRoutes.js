@@ -4,6 +4,8 @@ const {
   register,
   registerStudent,
   login,
+  verifyOTP,
+  resendOTP,
   getMe,
   updateProfile,
   changePassword,
@@ -14,17 +16,15 @@ const { protect, authorizeRoles } = require('../middleware/authMiddleware');
 
 // Public routes
 router.post('/login', login);
+router.post('/verify-otp', verifyOTP);
+router.post('/resend-otp', resendOTP);
 
-// Admin-only: register staff or admin
+// Admin-only
 router.post('/register', protect, authorizeRoles('admin'), register);
 
-// Staff/Admin: register a student (auto-generates password)
+// Staff/Admin
 router.post('/register-student', protect, authorizeRoles('staff', 'admin'), registerStudent);
-
-// Staff/Admin: list all students
 router.get('/students', protect, authorizeRoles('staff', 'admin'), getAllStudentUsers);
-
-// Staff/Admin: delete a student
 router.delete('/students/:id', protect, authorizeRoles('staff', 'admin'), deleteStudentUser);
 
 // Authenticated user
