@@ -92,6 +92,37 @@
   animation: fadeUp 1s ease;
 }
 
+/* ===== Hero Logos (NEW) ===== */
+.hero-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.hero-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: white;
+  padding: 6px;
+  object-fit: contain;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.hero-logo:hover {
+  transform: scale(1.05);
+}
+
+.logo-divider {
+  width: 1px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
 .hero-badge {
   display: inline-block;
   background: rgba(255, 255, 255, 0.15);
@@ -375,8 +406,8 @@
 }
 .course-link:hover { gap: 12px; }
 
-/* ===== Principal Message V2 (Without Photo) ===== */
-.principal-message-v2 {
+/* ===== Principal Message (No Photo) ===== */
+.principal-message {
   padding: 100px 0;
   background: #f8f9ff;
 }
@@ -452,11 +483,6 @@
   margin-top: 4px;
 }
 
-@media (max-width: 768px) {
-  .principal-message-v2 { padding: 70px 0; }
-  .principal-quote-card { padding: 50px 24px; }
-}
-
 /* ===== Testimonials ===== */
 .testimonials {
   padding: 100px 0;
@@ -522,51 +548,6 @@
 .testimonial-author span {
   font-size: 0.85rem;
   opacity: 0.8;
-}
-
-/* ===== Gallery ===== */
-.gallery-preview {
-  padding: 100px 0;
-  background: #f8f9ff;
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 220px 220px;
-  gap: 16px;
-}
-
-.gallery-item {
-  background-size: cover;
-  background-position: center;
-  border-radius: 12px;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.4s;
-}
-.gallery-item:hover { transform: scale(1.02); }
-.gallery-item::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(13, 27, 62, 0.8) 100%);
-  transition: opacity 0.3s;
-}
-.gallery-large {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-
-.gallery-caption {
-  position: absolute;
-  bottom: 16px;
-  left: 20px;
-  color: white;
-  font-weight: 600;
-  font-size: 1rem;
-  z-index: 2;
 }
 
 /* ===== CTA ===== */
@@ -645,61 +626,35 @@
 
 /* ===== Responsive ===== */
 @media (max-width: 1024px) {
-  .inspiration-grid,
-  .principal-grid {
+  .inspiration-grid {
     grid-template-columns: 1fr;
     gap: 40px;
     text-align: center;
   }
-  .inspiration-text,
-  .principal-content {
+  .inspiration-text {
     text-align: center;
   }
-  .principal-signature { align-items: center; }
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 200px 200px 200px;
-  }
-  .gallery-large { grid-column: span 2; grid-row: span 1; }
 }
 
 @media (max-width: 768px) {
   .hero { min-height: 80vh; padding: 80px 20px 60px; }
   .hero-trust { gap: 18px; }
   .trust-divider { display: none; }
+  .hero-logo { width: 65px; height: 65px; }
+  .hero-logos { gap: 16px; margin-bottom: 20px; }
+  .logo-divider { height: 40px; }
   .inspiration, .features, .courses-preview,
-  .principal-message, .notices-preview,
-  .testimonials, .gallery-preview, .cta-section {
+  .principal-message, .testimonials, .cta-section {
     padding: 70px 0;
   }
   .cta-section { padding: 70px 20px; }
-  .notice-item {
-    flex-wrap: wrap;
-    gap: 14px;
-    padding: 16px;
-  }
-  .notice-date {
-    border-right: none;
-    border-bottom: 2px solid #e3e8f5;
-    padding-right: 0;
-    padding-bottom: 10px;
-    width: 100%;
-    display: flex;
-    gap: 8px;
-    align-items: baseline;
-  }
-  .notice-day, .notice-month { display: inline; }
-  .notice-arrow { display: none; }
-  .gallery-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(5, 200px);
-  }
-  .gallery-large { grid-column: span 1; }
+  .principal-quote-card { padding: 50px 24px; }
   .hero-buttons { flex-direction: column; align-items: stretch; max-width: 320px; margin-left: auto; margin-right: auto; }
 }
 
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
   .hero-content h1 { letter-spacing: -0.5px; }
+  .hero-logo { width: 55px; height: 55px; }
   .feature-card, .course-card-body, .testimonial-card { padding: 24px 20px; }
 }
