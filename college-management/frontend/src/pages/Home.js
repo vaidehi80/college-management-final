@@ -53,7 +53,7 @@ const Home = () => {
         <div className="container">
           <div className="inspiration-grid">
             <div className="inspiration-image">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Kalpana_Chawla%2C_NASA_photo_portrait_in_orange_suit.jpg/440px-Kalpana_Chawla%2C_NASA_photo_portrait_in_orange_suit.jpg" alt="Kalpana Chawla" />
+              <img src="/kalpana-chawla.png" alt="Kalpana Chawla" />
               <div className="inspiration-name">
                 <strong>Kalpana Chawla</strong>
                 <span>1962 — 2003 • First Indian Woman in Space</span>
