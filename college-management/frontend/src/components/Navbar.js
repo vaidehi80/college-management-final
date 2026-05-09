@@ -24,14 +24,13 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-brand">
         <Link to="/" onClick={() => setMenuOpen(false)}>
-          <div className="brand-logo">🎓</div>
+          <img src="/college-logo.png.jpeg" alt="LKCWSC Logo" className="brand-logo-img" />
           <div className="brand-text">
-            <span className="brand-name">Late Kalpana Chawla Mahila College</span>
+            <span className="brand-name">Late Kalpana Chawala Women's Senior College</span>
             <span className="brand-sub">Senior Science & Arts College, Gangakhed</span>
           </div>
         </Link>
       </div>
-
       <div className={`navbar-links ${menuOpen ? 'open' : ''}`}>
         <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
         <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
@@ -41,7 +40,6 @@ const Navbar = () => {
         <Link to="/events" onClick={() => setMenuOpen(false)}>Events</Link>
         <Link to="/admissions" onClick={() => setMenuOpen(false)}>Admissions</Link>
         <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
-
         {user ? (
           <>
             <Link
@@ -60,7 +58,6 @@ const Navbar = () => {
           </Link>
         )}
       </div>
-
       <div
         className="hamburger"
         onClick={() => setMenuOpen(!menuOpen)}>
