@@ -19,10 +19,9 @@ const Home = () => {
    
    {/* SNDT Logo + Badge in one line */}
 <div className="hero-affiliation">
-  <img src="/sndt-logo.png.jpeg" alt="SNDT Logo" className="affiliation-logo" />
+  <img src="/sndt-logo.png" alt="SNDT Logo" className="affiliation-logo" />
   <span className="hero-badge">✨ Affiliated to SNDT Women's University, Mumbai</span>
 </div>
-    <span className="hero-badge">✨ Affiliated to SNDT Women's University, Mumbai</span>
     <h1>Late Kalpana Chawala Women's<br /><span className="hero-highlight">Senior College</span></h1>
     <h2>Empowering Women Through Excellence in Education</h2>
     <p>Senior Science & Arts College, Gangakhed, Parbhani</p>
