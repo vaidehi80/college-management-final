@@ -39,33 +39,32 @@ const About = () => {
     );
   }
 
-  const cards = [
-    {
-      icon: '🏛️',
-      title: 'Our History',
-      text: aboutData.history,
-      photo: aboutData.historyPhoto
-    },
-   {
-  icon: '🎯',
-  title: 'Our Vision',
-  text: 'To be a centre of excellence in women’s higher education that empowers every girl and woman of the Marathwada region to become enlightened, socially responsible leaders who contribute to nation-building through quality education.',
-  photo: aboutData.visionPhoto
-}
-    {
-  icon: '🚀',
-  title: 'Our Mission',
-  text: 'Provide accessible higher education, develop skilled and independent women, foster ethical values, promote leadership and community engagement, and uphold academic excellence.',
-  photo: aboutData.missionPhoto
-}
-    {
-      icon: '🏆',
-      title: 'Our Achievements',
-      text: aboutData.achievements,
-      photo: aboutData.achievementsPhoto
-    },
-  ];
-
+const cards = [
+  {
+    icon: '🏛️',
+    title: 'Our History',
+    text: aboutData.history,
+    photo: aboutData.historyPhoto
+  },
+  {
+    icon: '🎯',
+    title: 'Our Vision',
+    text: 'To be a centre of excellence in women’s higher education that empowers every girl and woman of the Marathwada region to become enlightened, socially responsible leaders who contribute to nation-building through quality education.',
+    photo: aboutData.visionPhoto
+  },
+  {
+    icon: '🚀',
+    title: 'Our Mission',
+    text: 'Provide accessible higher education, develop skilled and independent women, foster ethical values, promote leadership and community engagement, and uphold academic excellence.',
+    photo: aboutData.missionPhoto
+  },
+  {
+    icon: '🏆',
+    title: 'Our Achievements',
+    text: aboutData.achievements,
+    photo: aboutData.achievementsPhoto
+  }
+];
   return (
     <div>
       <Navbar />
