@@ -14,6 +14,8 @@ import StudentDashboard from './pages/dashboard/StudentDashboard';
 import StaffDashboard from './pages/dashboard/StaffDashboard';
 import AdminDashboard from './pages/dashboard/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import Resources from './pages/Resources';
+import Examination from './pages/Examination';
 import './App.css';
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/admissions" element={<Admissions />} />
           <Route path="/login" element={<Login />} />
+           <Route path="/resources" element={<Resources />} />
+<Route path="/examination" element={<Examination />} />
           <Route path="/student/dashboard" element={
             <ProtectedRoute roles={['student']}>
               <StudentDashboard />
