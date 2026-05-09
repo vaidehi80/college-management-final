@@ -1,63 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import API from '../api/axios';
 import './Home.css';
 
 const Home = () => {
-  const [notices, setNotices] = useState([]);
- 
-  useEffect(() => {
-    API.get('/notices').then(res => setNotices(res.data.notices?.slice(0, 3) || [])).catch(() => {});
-   
-  }, []);
-
   return (
     <div className="home-page">
       <Navbar />
 
-      {/* Hero Section with Random Background */}
-     <section
-  className="hero"
-  style={{
-    backgroundImage: `linear-gradient(
-      135deg,
-      rgba(13, 27, 62, 0.88) 0%,
-      rgba(21, 101, 192, 0.82) 100%
-    ), url('https://images.unsplash.com/photo-1562774053-701939374585?w=1600&q=80')`
-  }}
->
+     
+     {/* Hero Section with Single Background Image */}
+<section className="hero" style={{
+  backgroundImage: `linear-gradient(135deg, rgba(13, 27, 62, 0.88) 0%, rgba(21, 101, 192, 0.82) 100%), url('https://images.unsplash.com/photo-1562774053-701939374585?w=1600&q=80')`
+}}>
   <div className="hero-content">
-          <span className="hero-badge">
-  <img src="/sndt-logo.png" alt="SNDT Logo" className="badge-logo" />
-  Affiliated to SNDT Women’s University, Mumbai
-</span>
-          <h1>Late Kalpana Chawala Women's<br /><span className="hero-highlight">Senior College</span></h1>
-          <h2>Empowering Women Through Excellence in Education</h2>
-          <p>Senior Science & Arts College, Gangakhed, Parbhani </p>
-          <div className="hero-buttons">
-            <Link to="/admissions" className="btn btn-hero-primary">Apply for Admission →</Link>
-            <Link to="/about" className="btn btn-hero-secondary">Discover More</Link>
-          </div>
-          <div className="hero-trust">
-            <div className="trust-item">
-              <strong>500+</strong>
-              <span>Students</span>
-            </div>
-            <div className="trust-divider"></div>
-            <div className="trust-item">
-              <strong>30+</strong>
-              <span>Faculty</span>
-            </div>
-            <div className="trust-divider"></div>
-            <div className="trust-item">
-              <strong>10+</strong>
-              <span>Years</span>
-            </div>
-          </div>
-        </div>
-      </section>
+
+    {/* 2 LOGOS SECTION */}
+    <div className="hero-logos">
+      <img src="/college-logo.png" alt="LKCWSC Logo" className="hero-logo" />
+      <div className="logo-divider"></div>
+      <img src="/sndt-logo.png" alt="SNDT Logo" className="hero-logo" />
+    </div>
+
+    <span className="hero-badge">✨ Affiliated to SNDT Women's University, Mumbai</span>
+    <h1>Late Kalpana Chawala Women's<br /><span className="hero-highlight">Senior College</span></h1>
+    <h2>Empowering Women Through Excellence in Education</h2>
+    <p>Senior Science & Arts College, Gangakhed, Parbhani</p>
+    <div className="hero-buttons">
+      <Link to="/admissions" className="btn btn-hero-primary">Apply for Admission →</Link>
+      <Link to="/about" className="btn btn-hero-secondary">Discover More</Link>
+    </div>
+    <div className="hero-trust">
+      <div className="trust-item">
+        <strong>500+</strong>
+        <span>Students</span>
+      </div>
+      <div className="trust-divider"></div>
+      <div className="trust-item">
+        <strong>30+</strong>
+        <span>Faculty</span>
+      </div>
+      <div className="trust-divider"></div>
+      <div className="trust-item">
+        <strong>10+</strong>
+        <span>Years</span>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Inspiration Quote Section */}
       <section className="inspiration">
@@ -181,26 +172,24 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Principal's Message */}
+      {/* Principal's Message - No Photo */}
       <section className="principal-message">
         <div className="container">
-          <div className="principal-grid single-column">
-            <div className="principal-content">
-              <span className="section-tag">Principal's Message</span>
-              <h2>"Education is the most powerful weapon we can give our daughters."</h2>
-              <p>At Late Kalpana Chawala Women's Senior College, we believe every young woman deserves the chance to dream big and achieve more. For over a decade, we have been empowering girls from Marathwada with knowledge, skills, and the confidence to compete with the best in the world.</p>
-              <p>We invite you to join our family — to learn, grow, and become the change-makers our nation needs.</p>
-              <div className="principal-signature">
-                <strong>Principal</strong>
-                <span>LKCWSC Gangakhed</span>
-              </div>
+          <div className="principal-quote-card">
+            <div className="quote-icon">"</div>
+            <span className="section-tag">Principal's Message</span>
+            <h2>Education is the most powerful weapon we can give our daughters.</h2>
+            <p>At Late Kalpana Chawala Women's Senior College, we believe every young woman deserves the chance to dream big and achieve more. For over a decade, we have been empowering girls from Marathwada with knowledge, skills, and the confidence to compete with the best in the world.</p>
+            <p>We invite you to join our family — to learn, grow, and become the change-makers our nation needs.</p>
+            <div className="principal-signature">
+              <strong>Principal</strong>
+              <span>LKCWSC, Gangakhed</span>
             </div>
           </div>
         </div>
       </section>
 
-     
-       {/* Testimonials */}
+      {/* Testimonials */}
       <section className="testimonials">
         <div className="container">
           <div className="section-header text-center">
@@ -245,7 +234,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-  
+
       {/* CTA */}
       <section className="cta-section">
         <div className="cta-bg-pattern"></div>
