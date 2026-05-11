@@ -426,29 +426,86 @@ const Admissions = () => {
         {activeTab === 'documents' && (
           <div className="tab-content">
             <h2>Documents Required</h2>
-            <div className="documents-grid">
-              {[
-                { icon: '🪪', title: 'Aadhar Card Photo', desc: 'Clear photo of your Aadhar card (front side)' },
-                { icon: '📄', title: '10th Marksheet (SSC)', desc: 'Clear photo or scan of SSC marksheet' },
-                { icon: '📄', title: '12th Marksheet (HSC)', desc: 'Clear photo or scan of HSC marksheet' },
-                { icon: '📜', title: 'Leaving Certificate', desc: 'School/College leaving certificate' },
-                { icon: '📸', title: 'Student Photo', desc: 'Recent passport size photograph' },
-                { icon: '📅', title: 'Gap Certificate', desc: 'Required only if you have gap year' },
-                { icon: '📋', title: 'Caste Certificate', desc: 'Required for SC/ST/OBC/NT/VJNT category' },
-                { icon: '✅', title: 'Caste Validity', desc: 'Required if you have caste validity certificate' },
-              ].map((doc, i) => (
-                <div className="document-card" key={i}>
-                  <span className="doc-icon">{doc.icon}</span>
-                  <div>
-                    <h4>{doc.title}</h4>
-                    <p>{doc.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+            <div className="documents-grid">{/* DOCUMENTS TAB */}
+{activeTab === 'documents' && (
+  <div className="tab-content">
+    <h2>Documents Required</h2>
 
+    <div className="documents-grid">
+      {[
+        {
+          icon: '🪪',
+          title: 'Aadhar Card',
+          desc: 'Clear photo or PDF of Aadhar card'
+        },
+        {
+          icon: '📄',
+          title: '10th Marksheet',
+          desc: 'SSC marksheet copy'
+        },
+        {
+          icon: '📄',
+          title: '12th Marksheet',
+          desc: 'HSC marksheet copy'
+        },
+        {
+          icon: '🏦',
+          title: 'Bank Passbook',
+          desc: 'Student bank account passbook'
+        },
+        {
+          icon: '🏠',
+          title: 'Domicile Certificate',
+          desc: 'Maharashtra domicile certificate'
+        },
+        {
+          icon: '🍚',
+          title: 'Ration Card',
+          desc: 'Family ration card copy'
+        },
+        {
+          icon: '💍',
+          title: 'Marriage Certificate',
+          desc: 'Required for married students'
+        },
+        {
+          icon: '💰',
+          title: 'Income Certificate',
+          desc: 'Family income certificate'
+        },
+        {
+          icon: '📜',
+          title: 'Leaving Certificate',
+          desc: 'School/college leaving certificate'
+        },
+        {
+          icon: '📸',
+          title: 'Student Photo',
+          desc: 'Recent passport size photo'
+        },
+        {
+          icon: '📅',
+          title: 'Gap Certificate',
+          desc: 'Only for gap year students'
+        },
+        {
+          icon: '📋',
+          title: 'Caste Certificate',
+          desc: 'Required for reserved category'
+        },
+      ].map((doc, i) => (
+        <div className="document-card" key={i}>
+          <span className="doc-icon">{doc.icon}</span>
+
+          <div>
+            <h4>{doc.title}</h4>
+            <p>{doc.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
         {/* APPLY TAB */}
         {activeTab === 'apply' && (
           <div className="tab-content">
