@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+<Link to="/naac" onClick={() => setMenuOpen(false)}>
+  NAAC
+</Link>
+<Link to="/alumni" onClick={() => setMenuOpen(false)}>
+  Alumni
+</Link>
 import './Navbar.css';
 
 const Navbar = () => {
