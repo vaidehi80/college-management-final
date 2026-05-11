@@ -169,7 +169,65 @@ const Admissions = () => {
         return;
       }
     }
+{/* Additional Documents */}
+<div className="form-section">
+  <h3 className="form-section-title">
+    📁 Additional Documents Upload
+  </h3>
 
+  <div className="form-row">
+
+    <FileUploadBox
+      fieldName="bankPassbook"
+      label="🏦 Upload Bank Passbook"
+      accept="image/*,.pdf"
+      required={true}
+    />
+
+    <FileUploadBox
+      fieldName="domicileCertificate"
+      label="🏠 Upload Domicile Certificate"
+      accept="image/*,.pdf"
+      required={true}
+    />
+
+  </div>
+
+  <div className="form-row">
+
+    <FileUploadBox
+      fieldName="rashanCard"
+      label="🍚 Upload Ration Card"
+      accept="image/*,.pdf"
+      required={true}
+    />
+
+    <FileUploadBox
+      fieldName="incomeCertificate"
+      label="💰 Upload Income Certificate"
+      accept="image/*,.pdf"
+      required={true}
+    />
+
+  </div>
+
+  <div className="form-row">
+
+    <FileUploadBox
+      fieldName="leavingCertificate"
+      label="📜 Upload Leaving Certificate"
+      accept="image/*,.pdf"
+      required={true}
+    />
+
+    <FileUploadBox
+      fieldName="marriageCertificate"
+      label="💍 Upload Marriage Certificate"
+      accept="image/*,.pdf"
+    />
+
+  </div>
+</div>
     // If gap year is selected, gap certificate is required
     if (formData.hasGap && !uploadedFiles.gapCertificate) {
       setError('Please upload Gap Certificate (you selected gap year).');
