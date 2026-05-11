@@ -7,7 +7,7 @@ exports.sendOTPEmail = async (toEmail, otp, userName = 'User') => {
 
     await resend.emails.send({
       from: 'LKCWSC <onboarding@resend.dev>',
-      to: vikasborude51@gmail.com,
+      to: to: 'vikasborude51@gmail.com',
       subject: 'Your Login OTP - LKCWSC',
 
       html: `
