@@ -5,10 +5,13 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 exports.sendOTPEmail = async (toEmail, otp, userName = 'User') => {
   try {
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: toEmail,
-      subject: 'Your Login OTP - LKCWSC',
-      html: `
+  from: 'LKCWSC <onboarding@resend.dev>',
+  to: toEmail,
+  subject: 'Your Login OTP - LKCWSC',
+  html: `...`
+});
+
+console.log('OTP email sent successfully');
         <div style="font-family: Arial, sans-serif; padding: 20px;">
           <h2>Hello ${userName}</h2>
 
