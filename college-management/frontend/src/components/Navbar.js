@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-<Link to="/naac" onClick={() => setMenuOpen(false)}>
-  NAAC
-</Link>
-<Link to="/alumni" onClick={() => setMenuOpen(false)}>
-  Alumni
-</Link>
 import './Navbar.css';
 
 const Navbar = () => {
@@ -51,6 +45,12 @@ const Navbar = () => {
 </div>
         <Link to="/gallery" onClick={() => setMenuOpen(false)}>Gallery</Link>
         <Link to="/events" onClick={() => setMenuOpen(false)}>Events</Link>
+        <Link to="/naac" onClick={() => setMenuOpen(false)}>
+  NAAC
+</Link>
+<Link to="/alumni" onClick={() => setMenuOpen(false)}>
+  Alumni
+</Link>
         <Link to="/admissions" onClick={() => setMenuOpen(false)}>Admissions</Link>
         <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
         {user ? (
