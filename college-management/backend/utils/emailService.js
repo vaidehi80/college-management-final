@@ -10,34 +10,23 @@ const transporter = nodemailer.createTransport({
 
 exports.sendOTPEmail = async (toEmail, otp, userName = 'User') => {
   try {
-
     await transporter.sendMail({
       from: `"LKCWSC College" <${process.env.EMAIL_USER}>`,
       to: toEmail,
       subject: 'Your Login OTP - LKCWSC',
-
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px;">
           <h2>Hello ${userName}</h2>
-
           <p>Your OTP for login is:</p>
-
-          <h1 style="letter-spacing: 6px; color: #1565C0;">
-            ${otp}
-          </h1>
-
-          <p>This OTP is valid for 5 minutes.</p>
+          <h1>${otp}</h1>
         </div>
       `
     });
 
-    console.log('OTP email sent successfully');
-
     return { success: true };
 
   } catch (error) {
-
-    console.log('Email Error:', error);
+    console.log(error);
 
     return {
       success: false,
