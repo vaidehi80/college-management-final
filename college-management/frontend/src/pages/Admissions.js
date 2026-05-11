@@ -1168,4 +1168,4 @@ const Admissions = () => {
   );
 };
 
-export default Admissions;
+export default Admissions:
