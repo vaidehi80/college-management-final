@@ -675,4 +675,59 @@ body {
    DECLARATION
    ========================= */
 
-.declaration-sec
+.declaration-sec {
+  background: linear-gradient(180deg, #fbfcff, #f7faff);
+  border: 1px solid #e3f2fd;
+  border-radius: 14px;
+  padding: 26px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+}
+
+.declaration-sec:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(21, 101, 192, 0.07);
+}
+
+.declaration-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1565C0;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e3f2fd;
+}
+
+.declaration-text {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 18px;
+}
+
+.declaration-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #dbe4ff;
+}
+
+.declaration-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: #1565C0;
+  cursor: pointer;
+}
+
+.declaration-checkbox label {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+  cursor: pointer;
+  font-weight: 500;
+}
