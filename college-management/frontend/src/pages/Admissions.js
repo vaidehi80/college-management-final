@@ -508,16 +508,7 @@ const Admissions = () => {
 
   </div>
 )}
-
-          <div>
-            <h4>{doc.title}</h4>
-            <p>{doc.desc}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-)}
+   
         {/* APPLY TAB */}
         {activeTab === 'apply' && (
           <div className="tab-content">
@@ -1161,13 +1152,13 @@ const Admissions = () => {
                     </div>
                   </div>
 
-                  <button>
-                    type="submit"
-                    className="btn btn-primary submit-btn"
-                    disabled={loading}>
-                    {loading ? '⏳ Submitting Application...' : '🚀 Submit Application'}
-                  </button>
-
+                  <button
+  type="submit"
+  className="btn btn-primary submit-btn"
+  disabled={loading}
+>
+  {loading ? '⏳ Submitting Application...' : '🚀 Submit Application'}
+</button>
                 </form>
               </>
             )}
