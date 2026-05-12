@@ -16,6 +16,7 @@ const Admissions = () => {
   const [loading, setLoading] = useState(false);
   const [sscError, setSscError] = useState('');
   const [hscError, setHscError] = useState('');
+  const [fileErrors, setFileErrors] = useState({});
 
   const [formData, setFormData] = useState({
     applicantName: '', email: '', phone: '', address: '',
@@ -27,13 +28,14 @@ const Admissions = () => {
     hscCollegeName: '', hscBoard: '', hscStream: '', hscYOP: '',
     hscRollNumber: '', hscMedium: '', hscObtainedMarks: '',
     hscTotalMarks: '', hscPercentage: '', hscGrade: '',
-    hasGap: false, gapYear: '', gapReason: '',
+    hasGap: false, gapFromYear: '', gapToYear: '', gapTotalYears: '', gapReason: '',
     course: '', preferredSubject: '',
     fatherName: '', motherName: '', guardianPhone: '',
     familyIncome: '', referralSource: '', message: '',
     declaration: false, hasCasteValidity: false,
     casteCertificateNo: '', casteCertificateAuthority: '',
-    casteValidity: '', casteValidityDate: ''
+    casteValidity: '', casteValidityDate: '',
+    isMarried: false
   });
 
   const [uploadedFiles, setUploadedFiles] = useState({
@@ -44,6 +46,10 @@ const Admissions = () => {
     casteCertificate: null,
     casteValidityCertificate: null,
     studentPhoto: null,
+    bankPassbook: null,
+    domicileCertificate: null,
+    incomeCertificate: null,
+    marriageCertificate: null,
   });
 
   const [uploadPreviews, setUploadPreviews] = useState({
@@ -54,6 +60,10 @@ const Admissions = () => {
     casteCertificate: '',
     casteValidityCertificate: '',
     studentPhoto: '',
+    bankPassbook: '',
+    domicileCertificate: '',
+    incomeCertificate: '',
+    marriageCertificate: '',
   });
 
   useEffect(() => {
@@ -82,6 +92,30 @@ const Admissions = () => {
     }
   }, [user]);
 
+  // Auto calculate gap years
+  useEffect(() => {
+    if (formData.hasGap && formData.gapFromYear && formData.gapToYear) {
+      const from = parseInt(formData.gapFromYear);
+      const to = parseInt(formData.gapToYear);
+      if (to >= from) {
+        const total = to - from + 1;
+        setFormData(prev => ({ ...prev, gapTotalYears: total.toString() }));
+      } else {
+        setFormData(prev => ({ ...prev, gapTotalYears: '' }));
+      }
+    }
+  }, [formData.hasGap, formData.gapFromYear, formData.gapToYear]);
+
+  // Helper to determine grade from percentage
+  const calculateGrade = (percentage) => {
+    const pct = parseFloat(percentage);
+    if (isNaN(pct)) return '';
+    if (pct >= 75) return 'Distinction';
+    if (pct >= 60) return 'First Class';
+    if (pct >= 45) return 'Second Class';
+    return 'Pass Class';
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     // If user changes SSC year, reset HSC year (because HSC must be after SSC)
@@ -101,6 +135,7 @@ const Admissions = () => {
         setSscError('');
         const pct = ((updated.sscObtainedMarks / updated.sscTotalMarks) * 100).toFixed(2);
         updated.sscPercentage = pct;
+        updated.sscGrade = calculateGrade(pct);
       }
     }
     setFormData(updated);
@@ -115,6 +150,7 @@ const Admissions = () => {
         setHscError('');
         const pct = ((updated.hscObtainedMarks / updated.hscTotalMarks) * 100).toFixed(2);
         updated.hscPercentage = pct;
+        updated.hscGrade = calculateGrade(pct);
       }
     }
     setFormData(updated);
@@ -122,6 +158,29 @@ const Admissions = () => {
 
   const handleFileChange = (fieldName, file) => {
     if (!file) return;
+
+    // Validate Student Photo (max 250KB)
+    if (fieldName === 'studentPhoto') {
+      const maxSize = 250 * 1024; // 250 KB in bytes
+      if (file.size > maxSize) {
+        setFileErrors(prev => ({
+          ...prev,
+          [fieldName]: `❌ File size too large! Student photo must be under 250KB. Your file is ${(file.size / 1024).toFixed(1)}KB.`
+        }));
+        // Don't store the oversized file
+        setUploadedFiles(prev => ({ ...prev, [fieldName]: null }));
+        setUploadPreviews(prev => ({ ...prev, [fieldName]: '' }));
+        return;
+      }
+    }
+
+    // Clear any previous error for this field
+    setFileErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors[fieldName];
+      return newErrors;
+    });
+
     setUploadedFiles(prev => ({ ...prev, [fieldName]: file }));
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -154,6 +213,13 @@ const Admissions = () => {
       return;
     }
 
+    // Check for file size errors
+    if (Object.keys(fileErrors).length > 0) {
+      setError('Please fix file upload errors before submitting.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     // Validate required documents
     const requiredDocs = {
       studentPhoto: 'Student Passport Photo',
@@ -176,8 +242,15 @@ const Admissions = () => {
     }
 
     // If caste is not General, caste certificate is required
-    if (formData.category && formData.category !== 'General' && !uploadedFiles.casteCertificate) {
+    if (formData.category && formData.category !== 'general' && formData.category !== 'General' && !uploadedFiles.casteCertificate) {
       setError('Please upload Caste Certificate.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    // If married, marriage certificate is required
+    if (formData.isMarried && !uploadedFiles.marriageCertificate) {
+      setError('Please upload Marriage Certificate (you marked as married).');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
@@ -222,7 +295,7 @@ const Admissions = () => {
 
   const yearOptions = Array.from({ length: 10 }, (_, i) => 2024 - i);
 
-  const FileUploadBox = ({ fieldName, label, accept, required }) => {
+  const FileUploadBox = ({ fieldName, label, accept, required, hint }) => {
     const inputRef = useRef(null);
     const [dragging, setDragging] = useState(false);
 
@@ -233,63 +306,59 @@ const Admissions = () => {
       if (file) handleFileChange(fieldName, file);
     };
 
+    const hasError = fileErrors[fieldName];
+
     return (
-      <div className="form-group">
-        <label>{label} {required && <span style={{ color: 'red' }}>*</span>}</label>
+      <div className="form-group upload-form-group">
+        <label className="upload-label">
+          {label} {required && <span style={{ color: '#e53935' }}>*</span>}
+        </label>
         <div
+          className={`upload-box-modern ${dragging ? 'dragging' : ''} ${hasError ? 'has-error' : ''} ${uploadPreviews[fieldName] ? 'has-file' : ''}`}
           onDrop={handleDrop}
           onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
           onDragLeave={() => setDragging(false)}
           onClick={() => inputRef.current.click()}
-          style={{
-            border: `2px dashed ${dragging ? '#1565C0' : '#cce0ff'}`,
-            borderRadius: '10px',
-            padding: '20px',
-            textAlign: 'center',
-            cursor: 'pointer',
-            background: dragging ? '#e3f2fd' : '#f8faff',
-            transition: 'all 0.2s'
-          }}>
+        >
           {uploadPreviews[fieldName] ? (
-            <div>
+            <div className="upload-preview-wrapper">
               {uploadedFiles[fieldName]?.type?.startsWith('image/') ? (
                 <img
                   src={uploadPreviews[fieldName]}
                   alt={label}
-                  style={{
-                    maxWidth: '100%',
-                    maxHeight: '120px',
-                    borderRadius: '8px',
-                    objectFit: 'cover'
-                  }}
+                  className="upload-preview-img"
                 />
               ) : (
-                <div>
-                  <p style={{ fontSize: '2rem' }}>📄</p>
-                  <p style={{ fontSize: '13px', color: '#1565C0' }}>
+                <div className="upload-file-info">
+                  <div className="upload-file-icon">📄</div>
+                  <p className="upload-file-name">
                     {uploadedFiles[fieldName]?.name}
                   </p>
                 </div>
               )}
-              <p style={{ fontSize: '12px', color: '#2E7D32', marginTop: '8px' }}>
+              <p className="upload-success-text">
                 ✅ File selected — click to change
               </p>
+              {uploadedFiles[fieldName] && (
+                <p className="upload-file-size">
+                  {(uploadedFiles[fieldName].size / 1024).toFixed(1)} KB
+                </p>
+              )}
             </div>
           ) : (
-            <div>
-              <p style={{ fontSize: '2rem', marginBottom: '6px' }}>📁</p>
-              <p style={{ color: '#1565C0', fontWeight: '500', fontSize: '14px' }}>
-                Drag & Drop file here
-              </p>
-              <p style={{ color: '#888', fontSize: '12px', marginTop: '4px' }}>
-                or click to browse
-              </p>
-              <p style={{ color: '#aaa', fontSize: '11px', marginTop: '4px' }}>
-                JPG, PNG, PDF accepted
+            <div className="upload-empty">
+              <div className="upload-icon">📁</div>
+              <p className="upload-main-text">Drag & Drop file here</p>
+              <p className="upload-sub-text">or click to browse</p>
+              <p className="upload-hint-text">
+                {hint || 'JPG, PNG, PDF accepted'}
               </p>
             </div>
           )}
         </div>
+        {hasError && (
+          <div className="file-error-message">{hasError}</div>
+        )}
         <input
           ref={inputRef}
           type="file"
@@ -354,17 +423,11 @@ const Admissions = () => {
             </div>
 
             {!user && (
-              <div style={{
-                marginTop: '30px',
-                padding: '24px',
-                background: '#e3f2fd',
-                borderRadius: '12px',
-                textAlign: 'center'
-              }}>
-                <p style={{ fontSize: '1.1rem', color: '#1565C0', marginBottom: '16px', fontWeight: '500' }}>
+              <div className="auth-prompt-card auth-prompt-info">
+                <p className="auth-prompt-title">
                   🔐 You need to login or register before applying
                 </p>
-                <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <div className="auth-prompt-actions">
                   <a href="/register" className="btn btn-primary">
                     📝 Register Now
                   </a>
@@ -376,14 +439,8 @@ const Admissions = () => {
             )}
 
             {user && (
-              <div style={{
-                marginTop: '30px',
-                padding: '24px',
-                background: '#e8f5e9',
-                borderRadius: '12px',
-                textAlign: 'center'
-              }}>
-                <p style={{ fontSize: '1.1rem', color: '#2E7D32', marginBottom: '16px', fontWeight: '500' }}>
+              <div className="auth-prompt-card auth-prompt-success">
+                <p className="auth-prompt-title success">
                   ✅ You are logged in as {user.name}! Ready to apply.
                 </p>
                 <button
@@ -418,118 +475,51 @@ const Admissions = () => {
             </div>
           </div>
         )}
-{/* DOCUMENTS TAB */}
-{activeTab === 'documents' && (
-  <div className="tab-content">
 
-    <h2>Documents Required</h2>
-
-    <div className="documents-grid">
-
-      {[
-        {
-          icon: '🪪',
-          title: 'Aadhar Card',
-          desc: 'Clear photo or PDF of Aadhar card'
-        },
-        {
-          icon: '📄',
-          title: '10th Marksheet',
-          desc: 'SSC marksheet copy'
-        },
-        {
-          icon: '📄',
-          title: '12th Marksheet',
-          desc: 'HSC marksheet copy'
-        },
-        {
-          icon: '🏦',
-          title: 'Bank Passbook',
-          desc: 'Student bank account passbook'
-        },
-        {
-          icon: '🏠',
-          title: 'Domicile Certificate',
-          desc: 'Maharashtra domicile certificate'
-        },
-        {
-          icon: '🍚',
-          title: 'Ration Card',
-          desc: 'Family ration card copy'
-        },
-        {
-          icon: '💍',
-          title: 'Marriage Certificate',
-          desc: 'Required for married students'
-        },
-        {
-          icon: '💰',
-          title: 'Income Certificate',
-          desc: 'Family income certificate'
-        },
-        {
-          icon: '📜',
-          title: 'Leaving Certificate',
-          desc: 'School/college leaving certificate'
-        },
-        {
-          icon: '📸',
-          title: 'Student Photo',
-          desc: 'Recent passport size photo'
-        },
-        {
-          icon: '📅',
-          title: 'Gap Certificate',
-          desc: 'Only for gap year students'
-        },
-        {
-          icon: '📋',
-          title: 'Caste Certificate',
-          desc: 'Required for reserved category'
-        },
-      ].map((doc, i) => (
-
-        <div className="document-card" key={i}>
-
-          <span className="doc-icon">
-            {doc.icon}
-          </span>
-
-          <div>
-            <h4>{doc.title}</h4>
-            <p>{doc.desc}</p>
+        {/* DOCUMENTS TAB */}
+        {activeTab === 'documents' && (
+          <div className="tab-content">
+            <h2>Documents Required</h2>
+            <div className="documents-grid">
+              {[
+                { icon: '🪪', title: 'Aadhar Card', desc: 'Clear photo or PDF of Aadhar card' },
+                { icon: '📄', title: '10th Marksheet', desc: 'SSC marksheet copy' },
+                { icon: '📄', title: '12th Marksheet', desc: 'HSC marksheet copy' },
+                { icon: '🏦', title: 'Bank Passbook', desc: 'Student bank account passbook' },
+                { icon: '🏠', title: 'Domicile Certificate', desc: 'Maharashtra domicile certificate' },
+                { icon: '🍚', title: 'Ration Card', desc: 'Family ration card copy' },
+                { icon: '💍', title: 'Marriage Certificate', desc: 'Required for married students' },
+                { icon: '💰', title: 'Income Certificate', desc: 'Family income certificate' },
+                { icon: '📜', title: 'Leaving Certificate', desc: 'School/college leaving certificate' },
+                { icon: '📸', title: 'Student Photo', desc: 'Recent passport size photo (max 250KB)' },
+                { icon: '📅', title: 'Gap Certificate', desc: 'Only for gap year students' },
+                { icon: '📋', title: 'Caste Certificate', desc: 'Required for reserved category' },
+              ].map((doc, i) => (
+                <div className="document-card" key={i}>
+                  <span className="doc-icon">{doc.icon}</span>
+                  <div>
+                    <h4>{doc.title}</h4>
+                    <p>{doc.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
+        )}
 
-        </div>
-
-      ))}
-
-    </div>
-
-  </div>
-)}
-   
         {/* APPLY TAB */}
         {activeTab === 'apply' && (
           <div className="tab-content">
             <h2>Online Application Form</h2>
 
             {!user && (
-              <div style={{
-                padding: '30px',
-                background: '#ffebee',
-                borderRadius: '12px',
-                textAlign: 'center',
-                marginBottom: '24px'
-              }}>
-                <p style={{ fontSize: '2rem', marginBottom: '12px' }}>🔐</p>
-                <h3 style={{ color: '#C62828', marginBottom: '12px' }}>
-                  Login Required
-                </h3>
-                <p style={{ color: '#555', marginBottom: '20px' }}>
+              <div className="login-required-card">
+                <p className="login-required-icon">🔐</p>
+                <h3>Login Required</h3>
+                <p className="login-required-text">
                   You must be logged in to submit the application form.
                 </p>
-                <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <div className="auth-prompt-actions">
                   <a href="/register" className="btn btn-primary">
                     📝 Register Now
                   </a>
@@ -605,7 +595,7 @@ const Admissions = () => {
                           required
                         />
                         {formData.phone && formData.phone.length < 10 && (
-                          <small style={{ color: 'red', fontSize: '12px' }}>
+                          <small className="inline-error">
                             Enter 10 digit number
                           </small>
                         )}
@@ -621,9 +611,20 @@ const Admissions = () => {
                     <div className="form-group">
                       <label>Full Address *</label>
                       <textarea name="address" rows="3"
-                        placeholder="House No, Street, Village, Taluka, District, State, PIN"
+                        placeholder="House No, Street, Area, City, State, Pincode"
                         value={formData.address}
                         onChange={handleChange} required />
+                    </div>
+
+                    {/* Marital Status */}
+                    <div className="form-group">
+                      <label className="declaration-label inline-checkbox">
+                        <input type="checkbox"
+                          checked={formData.isMarried}
+                          onChange={e => setFormData({ ...formData, isMarried: e.target.checked })}
+                        />
+                        <span>💍 I am married</span>
+                      </label>
                     </div>
 
                     {/* Student Photo */}
@@ -632,7 +633,18 @@ const Admissions = () => {
                       label="📸 Student Passport Photo"
                       accept="image/*"
                       required={true}
+                      hint="JPG, PNG accepted • Max size: 250KB"
                     />
+
+                    {/* Marriage Certificate (conditional) */}
+                    {formData.isMarried && (
+                      <FileUploadBox
+                        fieldName="marriageCertificate"
+                        label="💍 Upload Marriage Certificate"
+                        accept="image/*,.pdf"
+                        required={true}
+                      />
+                    )}
                   </div>
 
                   {/* Aadhar */}
@@ -742,28 +754,27 @@ const Admissions = () => {
                         <input
                           type="number"
                           value={formData.sscPercentage}
-                          onChange={e => setFormData({ ...formData, sscPercentage: e.target.value })}
+                          readOnly
                           placeholder="Auto calculated"
-                          style={{ background: formData.sscPercentage ? '#e8f5e9' : 'white' }}
+                          className={formData.sscPercentage ? 'auto-filled' : ''}
                         />
                       </div>
                       <div className="form-group">
-                        <label>Grade / Class</label>
-                        <select name="sscGrade" value={formData.sscGrade}
-                          onChange={handleChange}>
-                          <option value="">Select Grade</option>
-                          <option value="Distinction">Distinction (75%+)</option>
-                          <option value="First Class">First Class (60-74%)</option>
-                          <option value="Second Class">Second Class (45-59%)</option>
-                          <option value="Pass Class">Pass Class (35-44%)</option>
-                        </select>
+                        <label>Grade / Class (Auto)</label>
+                        <input
+                          type="text"
+                          value={formData.sscGrade}
+                          readOnly
+                          placeholder="Auto calculated"
+                          className={formData.sscGrade ? 'auto-filled' : ''}
+                        />
                       </div>
                     </div>
                     {formData.sscObtainedMarks && formData.sscTotalMarks && !sscError && (
                       <div className="auto-calc">
                         ✅ Calculated: <strong>
                           {((formData.sscObtainedMarks / formData.sscTotalMarks) * 100).toFixed(2)}%
-                        </strong>
+                        </strong> — <strong>{formData.sscGrade}</strong>
                       </div>
                     )}
 
@@ -824,7 +835,7 @@ const Admissions = () => {
                             ))}
                         </select>
                         {formData.sscYOP && (
-                          <small style={{color:'#666', fontSize:'12px', marginTop:'4px', display:'block'}}>
+                          <small className="field-hint">
                             💡 HSC year must be after SSC year ({formData.sscYOP})
                           </small>
                         )}
@@ -875,28 +886,27 @@ const Admissions = () => {
                         <input
                           type="number"
                           value={formData.hscPercentage}
-                          onChange={e => setFormData({ ...formData, hscPercentage: e.target.value })}
+                          readOnly
                           placeholder="Auto calculated"
-                          style={{ background: formData.hscPercentage ? '#e8f5e9' : 'white' }}
+                          className={formData.hscPercentage ? 'auto-filled' : ''}
                         />
                       </div>
                       <div className="form-group">
-                        <label>Grade / Class</label>
-                        <select name="hscGrade" value={formData.hscGrade}
-                          onChange={handleChange}>
-                          <option value="">Select Grade</option>
-                          <option value="Distinction">Distinction (75%+)</option>
-                          <option value="First Class">First Class (60-74%)</option>
-                          <option value="Second Class">Second Class (45-59%)</option>
-                          <option value="Pass Class">Pass Class (35-44%)</option>
-                        </select>
+                        <label>Grade / Class (Auto)</label>
+                        <input
+                          type="text"
+                          value={formData.hscGrade}
+                          readOnly
+                          placeholder="Auto calculated"
+                          className={formData.hscGrade ? 'auto-filled' : ''}
+                        />
                       </div>
                     </div>
                     {formData.hscObtainedMarks && formData.hscTotalMarks && !hscError && (
                       <div className="auto-calc">
                         ✅ Calculated: <strong>
                           {((formData.hscObtainedMarks / formData.hscTotalMarks) * 100).toFixed(2)}%
-                        </strong>
+                        </strong> — <strong>{formData.hscGrade}</strong>
                       </div>
                     )}
 
@@ -912,10 +922,16 @@ const Admissions = () => {
                   <div className="form-section">
                     <h3 className="form-section-title">📅 Gap Year Information</h3>
                     <div className="form-group">
-                      <label className="declaration-label">
+                      <label className="declaration-label inline-checkbox">
                         <input type="checkbox"
                           checked={formData.hasGap}
-                          onChange={e => setFormData({ ...formData, hasGap: e.target.checked })}
+                          onChange={e => setFormData({
+                            ...formData,
+                            hasGap: e.target.checked,
+                            gapFromYear: e.target.checked ? formData.gapFromYear : '',
+                            gapToYear: e.target.checked ? formData.gapToYear : '',
+                            gapTotalYears: e.target.checked ? formData.gapTotalYears : ''
+                          })}
                         />
                         <span>I have a gap year between my education</span>
                       </label>
@@ -924,8 +940,8 @@ const Admissions = () => {
                       <div>
                         <div className="form-row" style={{ marginTop: '16px' }}>
                           <div className="form-group">
-                            <label>Gap Year *</label>
-                            <select name="gapYear" value={formData.gapYear}
+                            <label>Gap From Year *</label>
+                            <select name="gapFromYear" value={formData.gapFromYear}
                               onChange={handleChange} required>
                               <option value="">Select Year</option>
                               {yearOptions.map(year => (
@@ -933,6 +949,29 @@ const Admissions = () => {
                               ))}
                             </select>
                           </div>
+                          <div className="form-group">
+                            <label>Gap To Year *</label>
+                            <select name="gapToYear" value={formData.gapToYear}
+                              onChange={handleChange} required disabled={!formData.gapFromYear}>
+                              <option value="">
+                                {formData.gapFromYear ? 'Select Year' : 'Select From year first'}
+                              </option>
+                              {yearOptions
+                                .filter(year => !formData.gapFromYear || year >= parseInt(formData.gapFromYear))
+                                .map(year => (
+                                  <option key={year} value={year}>{year}</option>
+                                ))}
+                            </select>
+                          </div>
+                        </div>
+
+                        {formData.gapTotalYears && (
+                          <div className="auto-calc">
+                            ✅ Total Gap: <strong>{formData.gapTotalYears} year(s)</strong>
+                          </div>
+                        )}
+
+                        <div className="form-row">
                           <div className="form-group">
                             <label>Reason for Gap *</label>
                             <select name="gapReason" value={formData.gapReason}
@@ -943,6 +982,16 @@ const Admissions = () => {
                               <option value="financial">Financial Reasons</option>
                               <option value="other">Other</option>
                             </select>
+                          </div>
+                          <div className="form-group">
+                            <label>Total Gap Years</label>
+                            <input
+                              type="text"
+                              value={formData.gapTotalYears}
+                              readOnly
+                              placeholder="Auto calculated"
+                              className={formData.gapTotalYears ? 'auto-filled' : ''}
+                            />
                           </div>
                         </div>
 
@@ -994,7 +1043,7 @@ const Admissions = () => {
                       />
 
                       <div className="form-group" style={{ marginTop: '16px' }}>
-                        <label className="declaration-label">
+                        <label className="declaration-label inline-checkbox">
                           <input type="checkbox"
                             checked={formData.hasCasteValidity}
                             onChange={e => setFormData({ ...formData, hasCasteValidity: e.target.checked })}
@@ -1030,6 +1079,32 @@ const Admissions = () => {
                       )}
                     </div>
                   )}
+
+                  {/* Additional Documents */}
+                  <div className="form-section">
+                    <h3 className="form-section-title">📎 Additional Documents</h3>
+                    <p className="section-subtitle">
+                      Upload supporting documents for your application.
+                    </p>
+
+                    <FileUploadBox
+                      fieldName="bankPassbook"
+                      label="🏦 Upload Bank Passbook"
+                      accept="image/*,.pdf"
+                    />
+
+                    <FileUploadBox
+                      fieldName="domicileCertificate"
+                      label="🏠 Upload Domicile Certificate"
+                      accept="image/*,.pdf"
+                    />
+
+                    <FileUploadBox
+                      fieldName="incomeCertificate"
+                      label="💰 Upload Income Certificate"
+                      accept="image/*,.pdf"
+                    />
+                  </div>
 
                   {/* Course Selection */}
                   <div className="form-section">
@@ -1095,7 +1170,7 @@ const Admissions = () => {
                           required
                         />
                         {formData.guardianPhone && formData.guardianPhone.length < 10 && (
-                          <small style={{ color: 'red', fontSize: '12px' }}>
+                          <small className="inline-error">
                             Enter 10 digit number
                           </small>
                         )}
@@ -1153,12 +1228,12 @@ const Admissions = () => {
                   </div>
 
                   <button
-  type="submit"
-  className="btn btn-primary submit-btn"
-  disabled={loading}
->
-  {loading ? '⏳ Submitting Application...' : '🚀 Submit Application'}
-</button>
+                    type="submit"
+                    className="btn btn-primary submit-btn"
+                    disabled={loading}
+                  >
+                    {loading ? '⏳ Submitting Application...' : '🚀 Submit Application'}
+                  </button>
                 </form>
               </>
             )}
