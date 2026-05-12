@@ -1161,7 +1161,7 @@ const Admissions = () => {
                     </div>
                   </div>
 
-                  <button
+                  <button>
                     type="submit"
                     className="btn btn-primary submit-btn"
                     disabled={loading}>
