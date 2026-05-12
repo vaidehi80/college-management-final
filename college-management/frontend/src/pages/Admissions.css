@@ -347,3 +347,201 @@
   vertical-align: middle;
 }
  
+/* =========================
+MODERN UI IMPROVEMENTS
+========================= */
+
+body {
+  background: #f4f7fb;
+}
+
+/* Smooth animations */
+
+* {
+  box-sizing: border-box;
+}
+
+.form-section,
+.process-step,
+.document-card,
+.apply-form-card,
+.tab-btn {
+  transition: all 0.3s ease;
+}
+
+/* Form Card */
+
+.apply-form-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.06);
+  border: 1px solid #eef2ff;
+}
+
+/* Section Hover */
+
+.form-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(21,101,192,0.08);
+}
+
+/* Inputs Better UI */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  border: 1.5px solid #dbe4ff;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 14px;
+  background: white;
+  transition: all 0.25s ease;
+}
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+  border-color: #90caf9;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #1565C0;
+  box-shadow: 0 0 0 4px rgba(21,101,192,0.08);
+}
+
+/* Upload Box */
+
+.upload-box {
+  border: 2px dashed #bbdefb;
+  background: linear-gradient(to bottom, #f8fbff, #f1f7ff);
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  max-width: 360px;
+  margin: auto;
+  transition: all 0.3s ease;
+}
+
+.upload-box:hover {
+  border-color: #1565C0;
+  background: #eef6ff;
+  transform: translateY(-2px);
+}
+
+/* Upload Preview */
+
+.upload-preview-image {
+  width: 100%;
+  max-width: 240px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #e3f2fd;
+}
+
+/* Buttons */
+
+.btn,
+.submit-btn {
+  border-radius: 12px !important;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: all 0.25s ease;
+}
+
+.submit-btn {
+  background: linear-gradient(
+    135deg,
+    #1565C0,
+    #1E88E5
+  );
+  border: none;
+  box-shadow: 0 8px 18px rgba(21,101,192,0.25);
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(21,101,192,0.35);
+}
+
+/* Tabs */
+
+.tab-buttons {
+  gap: 14px;
+  border-bottom: none;
+}
+
+.tab-btn {
+  background: white;
+  border-radius: 12px 12px 0 0;
+  padding: 12px 20px;
+  border: 1px solid transparent;
+}
+
+.tab-btn.active {
+  background: #1565C0;
+  color: white;
+  border-color: #1565C0;
+  box-shadow: 0 6px 14px rgba(21,101,192,0.18);
+}
+
+/* Section Title */
+
+.form-section-title {
+  font-size: 19px !important;
+  font-weight: 700;
+}
+
+/* Success + Error */
+
+.form-success,
+.form-error {
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+/* Auto Calc Box */
+
+.auto-calc {
+  font-weight: 600;
+  border-left: 4px solid #43a047;
+}
+
+/* Notes */
+
+.aadhar-note,
+.gap-note,
+.caste-note {
+  border-left: 4px solid #1565C0;
+}
+
+/* Mobile Responsive */
+
+@media (max-width: 768px) {
+
+  .apply-form-card {
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .form-section {
+    padding: 18px;
+  }
+
+  .tab-buttons {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 8px;
+  }
+
+  .tab-btn {
+    white-space: nowrap;
+  }
+
+  .upload-box {
+    max-width: 100%;
+  }
+}
