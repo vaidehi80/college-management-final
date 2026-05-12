@@ -418,17 +418,14 @@ const Admissions = () => {
             </div>
           </div>
         )}
-
-        {/* DOCUMENTS TAB */}
-        {activeTab === 'documents' && (
-          <div className="tab-content">
-            <h2>Documents Required</h2>
-            <div className="documents-grid">
+{/* DOCUMENTS TAB */}
 {activeTab === 'documents' && (
   <div className="tab-content">
+
     <h2>Documents Required</h2>
 
     <div className="documents-grid">
+
       {[
         {
           icon: '🪪',
@@ -491,8 +488,26 @@ const Admissions = () => {
           desc: 'Required for reserved category'
         },
       ].map((doc, i) => (
+
         <div className="document-card" key={i}>
-          <span className="doc-icon">{doc.icon}</span>
+
+          <span className="doc-icon">
+            {doc.icon}
+          </span>
+
+          <div>
+            <h4>{doc.title}</h4>
+            <p>{doc.desc}</p>
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </div>
+)}
 
           <div>
             <h4>{doc.title}</h4>
