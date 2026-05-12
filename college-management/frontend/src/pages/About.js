@@ -59,11 +59,11 @@ const cards = [
     photo: aboutData.missionPhoto
   },
   {
-    icon: '🏆',
-    title: 'Our Achievements',
-    text: aboutData.achievements,
-    photo: aboutData.achievementsPhoto
-  }
+  icon: '🌟',
+  title: 'Our Core Values',
+  text: 'Women Empowerment, Accessibility, Excellence & Quality, Inclusivity & Dignity, Social Justice, Human Values, Nation-Building Commitment and Continuous Improvement.',
+  photo: ''
+}
 ];
   return (
     <div>
