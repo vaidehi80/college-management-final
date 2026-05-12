@@ -375,7 +375,7 @@ const Admissions = () => {
       <Navbar />
 
       <div className="page-header">
-        <h1>Admissions 2024-25</h1>
+        <h1>Admissions 2025-26</h1>
         <p>Join Late Kalpana Chawla Mahila Senior Science & Arts College, Gangakhed</p>
       </div>
 
@@ -456,16 +456,16 @@ const Admissions = () => {
         {/* DATES TAB */}
         {activeTab === 'dates' && (
           <div className="tab-content">
-            <h2>Important Dates 2024-25</h2>
+            <h2>Important Dates 2025-26</h2>
             <div className="dates-table">
               {[
-                { event: 'Application Form Available', date: 'June 1, 2024' },
-                { event: 'Last Date to Apply', date: 'July 15, 2024' },
-                { event: 'First Merit List', date: 'July 20, 2024' },
-                { event: 'Admission Confirmation', date: 'July 20-25, 2024' },
-                { event: 'Second Merit List', date: 'July 28, 2024' },
-                { event: 'Commencement of Classes', date: 'August 1, 2024' },
-                { event: 'Last Date for Admission', date: 'August 15, 2024' },
+                { event: 'Application Form Available', date: 'June 1, 2026' },
+                { event: 'Last Date to Apply', date: 'July 15, 2026' },
+                { event: 'First Merit List', date: 'July 20, 2026' },
+                { event: 'Admission Confirmation', date: 'July 20-25, 2026' },
+                { event: 'Second Merit List', date: 'July 28, 2026' },
+                { event: 'Commencement of Classes', date: 'August 1, 2026' },
+                { event: 'Last Date for Admission', date: 'August 15, 2026' },
               ].map((item, i) => (
                 <div className="date-row" key={i}>
                   <span className="date-event">{item.event}</span>
