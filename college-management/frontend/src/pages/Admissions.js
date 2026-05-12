@@ -161,7 +161,6 @@ const Admissions = () => {
       sscMarksheet: 'SSC (10th) Marksheet',
       hscMarksheet: 'HSC (12th) Marksheet'
     };
-
     for (const [key, label] of Object.entries(requiredDocs)) {
       if (!uploadedFiles[key]) {
         setError(`Please upload ${label} before submitting.`);
@@ -169,8 +168,6 @@ const Admissions = () => {
         return;
       }
     }
-  </div>
-</div>
     // If gap year is selected, gap certificate is required
     if (formData.hasGap && !uploadedFiles.gapCertificate) {
       setError('Please upload Gap Certificate (you selected gap year).');
