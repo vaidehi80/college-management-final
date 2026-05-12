@@ -423,7 +423,7 @@ const Admissions = () => {
         {activeTab === 'documents' && (
           <div className="tab-content">
             <h2>Documents Required</h2>
-            <div className="documents-grid">{/* DOCUMENTS TAB */}
+            <div className="documents-grid">
 {activeTab === 'documents' && (
   <div className="tab-content">
     <h2>Documents Required</h2>
