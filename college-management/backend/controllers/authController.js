@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const OTP = require('../models/OTP');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 const { sendOTPEmail, generateOTP } = require('../utils/emailService');
 
 const generateToken = (id) => {
@@ -116,10 +117,46 @@ exports.deleteStudentUser = async (req, res) => {
   }
 };
 
-// ===== STEP 1: LOGIN — Verify password, send OTP for staff/admin =====
+// ===== STEP 1: LOGIN — Verify CAPTCHA + password, then send OTP =====
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, captchaToken } = req.body;
+
+    // ===== CAPTCHA VERIFICATION =====
+    if (!captchaToken) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please complete the CAPTCHA verification.'
+      });
+    }
+
+    try {
+      const captchaResponse = await axios.post(
+        'https://www.google.com/recaptcha/api/siteverify',
+        null,
+        {
+          params: {
+            secret: process.env.RECAPTCHA_SECRET_KEY,
+            response: captchaToken
+          }
+        }
+      );
+
+      if (!captchaResponse.data.success) {
+        return res.status(400).json({
+          success: false,
+          message: 'CAPTCHA verification failed. Please try again.'
+        });
+      }
+    } catch (captchaError) {
+      console.error('CAPTCHA error:', captchaError.message);
+      return res.status(500).json({
+        success: false,
+        message: 'CAPTCHA service unavailable. Please try again.'
+      });
+    }
+
+    // ===== PASSWORD VERIFICATION =====
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ success: false, message: 'Invalid email or password' });
@@ -134,20 +171,16 @@ exports.login = async (req, res) => {
 
     // 🔐 If user is STAFF or ADMIN → send OTP, don't login yet
     if (user.role === 'staff' || user.role === 'admin') {
-      // Delete any old OTP for this email
       await OTP.deleteMany({ email: email.toLowerCase() });
 
-      // Generate new 6-digit OTP
       const otp = generateOTP();
 
-      // Save OTP to DB (auto-deletes after 5 minutes)
       await OTP.create({
         email: email.toLowerCase(),
         otp,
         purpose: 'login'
       });
 
-      // Send OTP via email
       const emailResult = await sendOTPEmail(email, otp, user.name);
       if (!emailResult.success) {
         return res.status(500).json({
@@ -193,7 +226,6 @@ exports.verifyOTP = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Email and OTP are required' });
     }
 
-    // Find OTP record
     const otpRecord = await OTP.findOne({ email: email.toLowerCase() });
     if (!otpRecord) {
       return res.status(400).json({
@@ -202,7 +234,6 @@ exports.verifyOTP = async (req, res) => {
       });
     }
 
-    // Check attempts (max 5)
     if (otpRecord.attempts >= 5) {
       await OTP.deleteOne({ _id: otpRecord._id });
       return res.status(400).json({
@@ -211,7 +242,6 @@ exports.verifyOTP = async (req, res) => {
       });
     }
 
-    // Verify OTP
     if (otpRecord.otp !== otp) {
       otpRecord.attempts += 1;
       await otpRecord.save();
@@ -222,7 +252,6 @@ exports.verifyOTP = async (req, res) => {
       });
     }
 
-    // OTP is correct — delete it and login user
     await OTP.deleteOne({ _id: otpRecord._id });
 
     const user = await User.findOne({ email: email.toLowerCase() });
