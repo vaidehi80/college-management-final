@@ -7,7 +7,7 @@ exports.sendOTPEmail = async (toEmail, otp, userName = 'User') => {
     const data = await resend.emails.send({
      from: 'LKCWSC College <noreply@vnssorg.com>',
       to: toEmail,
-      subject: '🔐 Your Login OTP - LKCWSC',
+      subject: '🔐 Your Login OTP - 'LKCWSC Verification Code',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f9f9f9; border-radius: 10px;">
           <div style="background: #8B1A1A; color: white; padding: 20px; border-radius: 10px 10px 0 0; text-align: center;">
