@@ -1,34 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import API from '../../api/axios';
+import ReCAPTCHA from 'react-google-recaptcha';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import './Auth.css';
 
+// Google reCAPTCHA Site Key
+const RECAPTCHA_SITE_KEY = '6Lf_9ecsAAAAAIZ_AqaWxD8E-ORneMixV0DW6C_X';
+
 const Login = () => {
-  const [step, setStep] = useState('login'); // 'login' or 'otp'
+  const [step, setStep] = useState('login');
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [otp, setOtp] = useState('');
+  const [captchaToken, setCaptchaToken] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
   const { setAuthData } = useAuth();
   const navigate = useNavigate();
+  const recaptchaRef = useRef();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Step 1: Login with email + password
+  // Step 1: Login with email + password + CAPTCHA
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
+
+    if (!captchaToken) {
+      setError('Please complete the CAPTCHA verification.');
+      return;
+    }
+
     setLoading(true);
     try {
-      const { data } = await API.post('/auth/login', formData);
+      const { data } = await API.post('/auth/login', {
+        ...formData,
+        captchaToken
+      });
 
       if (data.otpRequired) {
         // Staff/Admin → show OTP screen
@@ -44,6 +59,9 @@ const Login = () => {
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed. Please try again.');
+      // Reset CAPTCHA on error
+      if (recaptchaRef.current) recaptchaRef.current.reset();
+      setCaptchaToken(null);
     }
     setLoading(false);
   };
@@ -110,6 +128,8 @@ const Login = () => {
     setOtp('');
     setError('');
     setSuccess('');
+    setCaptchaToken(null);
+    if (recaptchaRef.current) recaptchaRef.current.reset();
   };
 
   return (
@@ -151,10 +171,20 @@ const Login = () => {
                     required
                   />
                 </div>
+
+                <div style={{ display: 'flex', justifyContent: 'center', margin: '16px 0' }}>
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={RECAPTCHA_SITE_KEY}
+                    onChange={(token) => setCaptchaToken(token)}
+                    onExpired={() => setCaptchaToken(null)}
+                  />
+                </div>
+
                 <button
                   type="submit"
                   className="btn btn-primary auth-btn"
-                  disabled={loading}>
+                  disabled={loading || !captchaToken}>
                   {loading ? 'Logging in...' : 'Login'}
                 </button>
               </form>
