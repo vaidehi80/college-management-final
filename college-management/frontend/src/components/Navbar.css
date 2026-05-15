@@ -2,24 +2,31 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 40px;
-  background-color: #1565C0;
-  color: white;
+  padding: 10px 32px;
+  background: rgba(16, 54, 112, 0.95);
+  backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
 }
 
+/* Brand */
 .navbar-brand a {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: white;
   text-decoration: none;
 }
 
-.brand-logo { font-size: 2rem; }
+.brand-logo-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: white;
+  padding: 3px;
+  object-fit: cover;
+}
 
 .brand-text {
   display: flex;
@@ -27,68 +34,157 @@
 }
 
 .brand-name {
+  color: white;
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.2;
 }
 
-.brand-sub { font-size: 0.72rem; opacity: 0.85; }
+.brand-sub {
+  color: rgba(255,255,255,0.75);
+  font-size: 0.72rem;
+}
 
+/* Links */
 .navbar-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 22px;
 }
 
-.navbar-links a {
+.navbar-links a,
+.dropdown-title {
   color: white;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  transition: opacity 0.2s;
-}
-
-.navbar-links a:hover { opacity: 0.8; }
-
-.navbar-links .btn {
-  padding: 8px 18px;
-  font-size: 14px;
-  background-color: white;
-  color: #1565C0;
-  border: none;
-  border-radius: 6px;
   cursor: pointer;
-  font-weight: 600;
+  transition: 0.25s ease;
+  position: relative;
 }
 
-.navbar-links .btn:hover { background-color: #e3f2fd; }
+.navbar-links a:hover,
+.dropdown-title:hover {
+  color: #ffd54f;
+}
 
+/* Underline Hover */
+.navbar-links a::after,
+.dropdown-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: #ffd54f;
+  transition: 0.3s;
+}
+
+.navbar-links a:hover::after,
+.dropdown-title:hover::after {
+  width: 100%;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  min-width: 210px;
+  background: white;
+  border-radius: 12px;
+  padding: 10px 0;
+  display: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a {
+  display: block;
+  color: #1565C0 !important;
+  padding: 12px 18px;
+  font-size: 14px;
+}
+
+.dropdown-menu a:hover {
+  background: #f5f8ff;
+}
+
+/* Buttons */
+.btn,
+.login-btn {
+  background: white;
+  color: #1565C0 !important;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.btn:hover,
+.login-btn:hover {
+  transform: translateY(-2px);
+  background: #ffd54f;
+  color: #111 !important;
+}
+
+/* Mobile */
 .hamburger {
   display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
 }
 
-.hamburger span {
-  width: 25px;
-  height: 3px;
-  background-color: white;
-  border-radius: 3px;
-}
+@media (max-width: 950px) {
 
-@media (max-width: 900px) {
-  .hamburger { display: flex; }
+  .navbar {
+    padding: 12px 18px;
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .hamburger span {
+    width: 26px;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+  }
+
   .navbar-links {
     display: none;
-    flex-direction: column;
     position: absolute;
-    top: 70px;
+    top: 78px;
     left: 0;
     right: 0;
-    background-color: #1565C0;
+    background: #1565C0;
+    flex-direction: column;
     padding: 20px;
-    gap: 16px;
+    gap: 18px;
   }
-  .navbar-links.open { display: flex; }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .brand-name {
+    font-size: 0.9rem;
+  }
+
+  .brand-sub {
+    font-size: 0.65rem;
+  }
 }

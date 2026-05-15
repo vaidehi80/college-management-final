@@ -23,9 +23,11 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     const { data } = await API.post('/auth/login', { email, password });
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('user', JSON.stringify(data.user));
-    setUser(data.user);
+    if (!data.otpRequired) {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      setUser(data.user);
+    }
     return data;
   };
 
@@ -37,6 +39,13 @@ export const AuthProvider = ({ children }) => {
     return data;
   };
 
+  // Used by OTP login flow to set user after successful verification
+  const setAuthData = (userData, token) => {
+    if (token) localStorage.setItem('token', token);
+    if (userData) localStorage.setItem('user', JSON.stringify(userData));
+    setUser(userData);
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -44,7 +53,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, setAuthData }}>
       {children}
     </AuthContext.Provider>
   );

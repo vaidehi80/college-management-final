@@ -1,13 +1,14 @@
 const User = require('../models/User');
+const OTP = require('../models/OTP');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
+const { sendOTPEmail, generateOTP } = require('../utils/emailService');
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
 
 // ===== AUTO PASSWORD GENERATOR =====
-// Format: First 4 letters of first name + @ + DD + YY
-// Example: prajwal born 27/08/2005 → praj@2705
 const generateStudentPassword = (firstName, dob) => {
   const namePart = firstName.toLowerCase().slice(0, 4);
   const date = new Date(dob);
@@ -36,10 +37,7 @@ exports.registerStudent = async (req, res) => {
       });
     }
 
-    // Build full name
     const name = [firstName, middleName, lastName].filter(Boolean).join(' ');
-
-    // Auto-generate password
     const password = generateStudentPassword(firstName, dateOfBirth);
 
     const user = await User.create({
@@ -57,7 +55,7 @@ exports.registerStudent = async (req, res) => {
     res.status(201).json({
       success: true,
       message: 'Student registered successfully!',
-      generatedPassword: password,  // Returned once so staff can tell student
+      generatedPassword: password,
       user: {
         _id: user._id,
         name: user.name,
@@ -71,8 +69,7 @@ exports.registerStudent = async (req, res) => {
   }
 };
 
-// ===== STAFF/ADMIN/SELF: Register a Staff or Admin =====
-// Kept for legacy admin creation
+// ===== Register Staff/Admin =====
 exports.register = async (req, res) => {
   try {
     const { name, email, password, role, phone } = req.body;
@@ -99,7 +96,6 @@ exports.register = async (req, res) => {
   }
 };
 
-// ===== LIST ALL STUDENTS (For Staff Dashboard) =====
 exports.getAllStudentUsers = async (req, res) => {
   try {
     const students = await User.find({ role: 'student' }).select('-password').sort({ createdAt: -1 });
@@ -109,7 +105,6 @@ exports.getAllStudentUsers = async (req, res) => {
   }
 };
 
-// ===== DELETE STUDENT =====
 exports.deleteStudentUser = async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
@@ -122,10 +117,46 @@ exports.deleteStudentUser = async (req, res) => {
   }
 };
 
-// ===== LOGIN =====
+// ===== STEP 1: LOGIN — Verify CAPTCHA + password, then send OTP =====
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, captchaToken } = req.body;
+
+    // ===== CAPTCHA VERIFICATION =====
+    if (!captchaToken) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please complete the CAPTCHA verification.'
+      });
+    }
+
+    try {
+      const captchaResponse = await axios.post(
+        'https://www.google.com/recaptcha/api/siteverify',
+        null,
+        {
+          params: {
+            secret: process.env.RECAPTCHA_SECRET_KEY,
+            response: captchaToken
+          }
+        }
+      );
+
+      if (!captchaResponse.data.success) {
+        return res.status(400).json({
+          success: false,
+          message: 'CAPTCHA verification failed. Please try again.'
+        });
+      }
+    } catch (captchaError) {
+      console.error('CAPTCHA error:', captchaError.message);
+      return res.status(500).json({
+        success: false,
+        message: 'CAPTCHA service unavailable. Please try again.'
+      });
+    }
+
+    // ===== PASSWORD VERIFICATION =====
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ success: false, message: 'Invalid email or password' });
@@ -137,8 +168,39 @@ exports.login = async (req, res) => {
     if (!user.isActive) {
       return res.status(401).json({ success: false, message: 'Account is deactivated' });
     }
+
+    // 🔐 If user is STAFF or ADMIN → send OTP, don't login yet
+    if (user.role === 'staff' || user.role === 'admin') {
+      await OTP.deleteMany({ email: email.toLowerCase() });
+
+      const otp = generateOTP();
+
+      await OTP.create({
+        email: email.toLowerCase(),
+        otp,
+        purpose: 'login'
+      });
+
+      const emailResult = await sendOTPEmail(email, otp, user.name);
+      if (!emailResult.success) {
+        return res.status(500).json({
+          success: false,
+          message: 'Failed to send OTP email. Please try again or contact admin.'
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        otpRequired: true,
+        message: `OTP has been sent to ${email}. Please check your inbox.`,
+        email: email
+      });
+    }
+
+    // For STUDENTS — direct login (no OTP)
     res.status(200).json({
       success: true,
+      otpRequired: false,
       message: 'Login successful',
       token: generateToken(user._id),
       user: {
@@ -149,6 +211,97 @@ exports.login = async (req, res) => {
         phone: user.phone,
         photo: user.photo,
       }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// ===== STEP 2: VERIFY OTP — Complete login for staff/admin =====
+exports.verifyOTP = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+      return res.status(400).json({ success: false, message: 'Email and OTP are required' });
+    }
+
+    const otpRecord = await OTP.findOne({ email: email.toLowerCase() });
+    if (!otpRecord) {
+      return res.status(400).json({
+        success: false,
+        message: 'OTP has expired or not found. Please request a new one.'
+      });
+    }
+
+    if (otpRecord.attempts >= 5) {
+      await OTP.deleteOne({ _id: otpRecord._id });
+      return res.status(400).json({
+        success: false,
+        message: 'Too many wrong attempts. Please request a new OTP.'
+      });
+    }
+
+    if (otpRecord.otp !== otp) {
+      otpRecord.attempts += 1;
+      await otpRecord.save();
+      const remaining = 5 - otpRecord.attempts;
+      return res.status(400).json({
+        success: false,
+        message: `Wrong OTP. ${remaining} attempts remaining.`
+      });
+    }
+
+    await OTP.deleteOne({ _id: otpRecord._id });
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'OTP verified! Login successful.',
+      token: generateToken(user._id),
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phone: user.phone,
+        photo: user.photo,
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// ===== RESEND OTP =====
+exports.resendOTP = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    await OTP.deleteMany({ email: email.toLowerCase() });
+
+    const otp = generateOTP();
+    await OTP.create({ email: email.toLowerCase(), otp, purpose: 'login' });
+
+    const emailResult = await sendOTPEmail(email, otp, user.name);
+    if (!emailResult.success) {
+      return res.status(500).json({
+        success: false,
+        message: 'Failed to send OTP email.'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `New OTP sent to ${email}`
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

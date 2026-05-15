@@ -40,7 +40,7 @@ const Footer = () => {
           <h4>Contact Us</h4>
           <p>📍 Gangakhed, Marathwada</p>
           <p>Maharashtra - 431514</p>
-          <p>📞 +91 XXXXXXXXXX</p>
+          <p>📞 +919307162914</p>
           <p>✉️ info@lkcwsc.edu.in</p>
           <p>🕐 Mon - Sat: 9:00 AM - 5:00 PM</p>
         </div>

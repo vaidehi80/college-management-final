@@ -21,7 +21,7 @@ const StaffDashboard = () => {
     phone: '',
     dateOfBirth: ''
   });
-  const [generatedPassword, setGeneratedPassword] = useState('');
+  
   const [savedStudentInfo, setSavedStudentInfo] = useState(null);
 
   const [noticeForm, setNoticeForm] = useState({
@@ -113,8 +113,8 @@ const StaffDashboard = () => {
     }
     try {
       const { data } = await API.post('/auth/register-student', studentForm);
-      setGeneratedPassword(data.generatedPassword);
-      setSavedStudentInfo({
+      
+        setSavedStudentInfo({
         name: data.user.name,
         email: data.user.email,
         password: data.generatedPassword

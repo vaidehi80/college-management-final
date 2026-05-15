@@ -1,0 +1,22 @@
+.resources-section {
+  padding: 60px 20px;
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.resource-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  border-top: 4px solid #1565C0;
+}
+
+.resource-card h3 {
+  color: #1565C0;
+  margin-bottom: 12px;
+}
