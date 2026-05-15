@@ -707,9 +707,10 @@
     font-size: 11px;
   }
 }
-.btn-hero-primary,
-.btn-hero-primary:visited,
-.btn-hero-primary:hover,
-.btn-hero-primary:focus {
-  color: #fff !important;
+a.btn-hero-primary {
+  color: white !important;
+}
+
+a.btn-hero-primary:hover {
+  color: white !important;
 }
