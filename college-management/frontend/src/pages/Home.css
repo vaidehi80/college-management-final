@@ -54,23 +54,22 @@
 }
 
 .btn-hero-secondary {
-  background: linear-gradient(135deg, #1565C0, #0D47A1) !important;
-  color: #fff !important;
+  background: linear-gradient(135deg, #1565C0, #0D47A1);
+  color: white !important;
   padding: 14px 32px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
   display: inline-block;
-  border: none !important;
+  border: 2px solid transparent;
   transition: all 0.3s;
   box-shadow: 0 4px 14px rgba(21, 101, 192, 0.3);
 }
 
 .btn-hero-secondary:hover {
-  background: linear-gradient(135deg, #1976D2, #0D47A1) !important;
-  color: #fff !important;
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(21, 101, 192, 0.4);
+  color: white !important;
 }
 
 /* ===== Hero ===== */
