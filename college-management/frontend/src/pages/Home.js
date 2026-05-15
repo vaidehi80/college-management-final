@@ -15,7 +15,7 @@ const Home = () => {
   backgroundImage: `linear-gradient(135deg, rgba(13, 27, 62, 0.88) 0%, rgba(21, 101, 192, 0.82) 100%), url('https://images.unsplash.com/photo-1562774053-701939374585?w=1600&q=80')`
 }}>
   <div className="hero-content">
-
+--
    
    {/* SNDT Logo + Badge in one line */}
 <div className="hero-affiliation">
@@ -27,7 +27,7 @@ const Home = () => {
     <p>Senior Science & Arts College, Gangakhed, Parbhani</p>
     <div className="hero-buttons">
       <Link to="/admissions" className="btn btn-hero-primary">Apply for Admission →</Link>
-      <Link to="/about" className="btn btn-hero-secondary">Discover More</Link>
+      <Link to="/about" className="btn btn-hero-primary">Discover More</Link>
     </div>
     <div className="hero-trust">
       <div className="trust-item">
