@@ -712,3 +712,15 @@
     font-size: 11px;
   }
 }
+.hero-buttons .btn-hero-secondary {
+  background: linear-gradient(135deg, #1565C0, #0D47A1) !important;
+  color: white !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(21, 101, 192, 0.3) !important;
+}
+
+.hero-buttons .btn-hero-secondary:hover {
+  background: linear-gradient(135deg, #1976D2, #0D47A1) !important;
+  color: white !important;
+  transform: translateY(-2px);
+}
