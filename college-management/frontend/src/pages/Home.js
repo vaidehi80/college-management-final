@@ -31,7 +31,7 @@ const Home = () => {
     </div>
     <div className="hero-trust">
       <div className="trust-item">
-        <strong>500+</strong>
+        <strong>900+</strong>
         <span>Students</span>
       </div>
       <div className="trust-divider"></div>
