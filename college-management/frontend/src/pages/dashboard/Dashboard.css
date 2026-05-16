@@ -18,15 +18,35 @@
 .sidebar-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 24px 20px;
-  background: #1565C0;
+  gap: 6px;
+  padding: 10px 8px;
+  background: #0b3d91;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.sidebar-logo { font-size: 2rem; }
-.sidebar-college { font-weight: 700; font-size: 15px; }
-.sidebar-role { font-size: 12px; opacity: 0.8; }
+.sidebar-logo-img {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: white;
+  flex-shrink: 0;
+}
 
+.sidebar-text h3 {
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.sidebar-text p {
+  color: #dbeafe;
+  font-size: 7px;
+  margin-top: 1px;
+  line-height: 1;
+}
 .sidebar-nav { flex: 1; padding: 16px 0; }
 
 .sidebar-nav button {
