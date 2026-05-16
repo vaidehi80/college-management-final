@@ -16,15 +16,51 @@ const Contact = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // ===== VALIDATION HANDLERS =====
+
+  // Name: Only alphabets and spaces allowed
+  const handleNameChange = (e) => {
+    const value = e.target.value;
+    if (/^[A-Za-z\s]*$/.test(value)) {
+      setFormData({ ...formData, name: value });
+    }
+  };
+
+  // Phone: Only numbers, max 10 digits
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    if (/^\d{0,10}$/.test(value)) {
+      setFormData({ ...formData, phone: value });
+    }
+  };
+
+  // Other fields: normal change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
     setSuccess('');
+
+    // ===== EXTRA VALIDATION ON SUBMIT =====
+    if (formData.name.trim().length < 3) {
+      setError('❌ Name must be at least 3 characters long');
+      return;
+    }
+
+    if (formData.phone && formData.phone.length !== 10) {
+      setError('❌ Phone number must be exactly 10 digits');
+      return;
+    }
+
+    if (formData.phone && !/^[6-9]/.test(formData.phone)) {
+      setError('❌ Phone number must start with 6, 7, 8, or 9');
+      return;
+    }
+
+    setLoading(true);
     try {
       await API.post('/contact', formData);
       setSuccess('✅ Your message has been sent successfully! We will get back to you soon.');
@@ -128,13 +164,13 @@ const Contact = () => {
 
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label>Full Name *</label>
+                <label>Full Name * <span style={{fontSize: '12px', color: '#888', fontWeight: 'normal'}}>(alphabets only)</span></label>
                 <input
                   type="text"
                   name="name"
                   placeholder="Your full name"
                   value={formData.name}
-                  onChange={handleChange}
+                  onChange={handleNameChange}
                   required
                 />
               </div>
@@ -152,13 +188,14 @@ const Contact = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Phone</label>
+                  <label>Phone <span style={{fontSize: '12px', color: '#888', fontWeight: 'normal'}}>(10 digits)</span></label>
                   <input
                     type="text"
                     name="phone"
-                    placeholder="Your phone number"
+                    placeholder="9876543210"
                     value={formData.phone}
-                    onChange={handleChange}
+                    onChange={handlePhoneChange}
+                    maxLength="10"
                   />
                 </div>
               </div>
