@@ -79,12 +79,22 @@ useEffect(() => {
     <div className="dashboard-layout">
       <aside className="sidebar">
         <div className="sidebar-header">
-          <div className="sidebar-logo">🎓</div>
-          <div>
-            <p className="sidebar-college">LKCWSC</p>
-            <p className="sidebar-role">Student Portal</p>
-          </div>
-        </div>
+  <img
+    src="/college-logo.png"
+    alt="College Logo"
+    className="sidebar-logo-img"
+  />
+
+  <div>
+    <p className="sidebar-college">
+      Late Kalpana Chawla Women's Senior College
+    </p>
+
+    <p className="sidebar-role">
+      Senior Science & Arts College, Gangakhed
+    </p>
+  </div>
+</div>
         <nav className="sidebar-nav">
           {tabs.map(tab => (
             <button
