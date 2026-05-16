@@ -1477,7 +1477,7 @@ const Admissions = () => {
                     </div>
                   </div>
 
-                  <button type="submit" className="btn btn-primary submit-btn" disabled={loading}>
+                  <button type="submit" className="btn btn-primary submit-btn">
                     {loading ? '⏳ Submitting Application...' : '🚀 Submit Application'}
                   </button>
                 </form>
