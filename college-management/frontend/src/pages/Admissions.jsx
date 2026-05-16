@@ -742,15 +742,90 @@ const Admissions = () => {
                       </div>
                     </div>
 
-                    {/* Marital Status — checkbox properly aligned */}
-                    <div className="checkbox-row">
-                      <label className="checkbox-label">
-                        <input type="checkbox" checked={formData.isMarried}
-                          onChange={e => setFormData({ ...formData, isMarried: e.target.checked })} />
-                        <span>💍 I am married</span>
-                      </label>
-                    </div>
-                  </div>
+                  {/* Marital Status — checkbox properly aligned */}
+<div className="checkbox-row">
+  <label className="checkbox-label">
+    <input
+      type="checkbox"
+      checked={formData.isMarried}
+      onChange={e =>
+        setFormData({
+          ...formData,
+          isMarried: e.target.checked
+        })
+      }
+    />
+    <span>💍 I am married</span>
+  </label>
+</div>
+
+{/* Husband Name - only if married */}
+{formData.isMarried && (
+  <div className="form-group">
+    <label>Husband Name</label>
+    <input
+      type="text"
+      placeholder="Enter Husband Name"
+      value={formData.husbandName || ''}
+      onChange={(e) =>
+        setFormData({
+          ...formData,
+          husbandName: e.target.value
+        })
+      }
+    />
+  </div>
+)}
+
+{/* Guardian Name */}
+<div className="form-group">
+  <label>Guardian Name</label>
+  <input
+    type="text"
+    placeholder="Enter Guardian Name"
+    value={formData.guardianName || ''}
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        guardianName: e.target.value
+      })
+    }
+  />
+</div>
+
+{/* Husband Name - only if married */}
+{formData.isMarried && (
+  <div className="form-group">
+    <label>Husband Name</label>
+    <input
+      type="text"
+      placeholder="Enter Husband Name"
+      value={formData.husbandName || ''}
+      onChange={(e) =>
+        setFormData({
+          ...formData,
+          husbandName: e.target.value
+        })
+      }
+    />
+  </div>
+)}
+
+{/* Guardian Name */}
+<div className="form-group">
+  <label>Guardian Name</label>
+  <input
+    type="text"
+    placeholder="Enter Guardian Name"
+    value={formData.guardianName || ''}
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        guardianName: e.target.value
+      })
+    }
+  />
+</div>
 
                  {/* Show Husband Name only if married */}
 {formData.isMarried && (
