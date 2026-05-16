@@ -80,14 +80,14 @@ const Home = () => {
 
             <div className="inspiration-image">
               <img src="/kalpna-chawla.png" alt="Kalpana Chawla" />
+        
+  <div className="inspiration-name">
+    <strong>Kalpana Chawla</strong>
+    <span>1962 — 2003 • First Indian Woman in Space</span>
+  </div>
+</div>
 
-              <div className="inspiration-name">
-                <strong>Kalpana Chawla</strong>
-                <span>1962 — 2003 • First Indian Woman in Space</span>
-              </div>
-           
-
-            <div className="inspiration-text">
+<div className="inspiration-text">
               <span className="section-tag">Our Inspiration</span>
 
               <h2>
