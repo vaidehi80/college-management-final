@@ -169,6 +169,7 @@ const Home = () => {
         <div className="about-image">
           <div className="image-placeholder">🏫</div>
         </div>
+              </div>
       </section>
 
       {/* Why Choose Us */}
