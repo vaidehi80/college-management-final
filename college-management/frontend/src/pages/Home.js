@@ -136,40 +136,38 @@ const Home = () => {
       </section>
 
       {/* About Preview */}
-      <section className="about-preview container">
-        <div className="about-text">
-          <h2 className="section-title">About Our College</h2>
+<section className="about-preview container">
+  <div className="about-text">
+    <h2 className="section-title">About Our College</h2>
 
-          <p className="section-subtitle">
-            Dedicated to empowering women with quality education
-          </p>
+    <p className="section-subtitle">
+      Dedicated to empowering women with quality education
+    </p>
 
-          <p>
-            Late Kalpana Chawla Mahila Senior Science and Arts College,
-            Gangakhed is committed to providing excellent education to women in
-            the Marathwada region. Named after the legendary astronaut Kalpana
-            Chawla, our college inspires students to reach for the stars.
-          </p>
+    <p>
+      Late Kalpana Chawla Mahila Senior Science and Arts College,
+      Gangakhed is committed to providing excellent education to women in
+      the Marathwada region.
+    </p>
 
-          <br />
+    <br />
 
-          <p>
-            Affiliated to SNDT Women's University and run by Vidyaniketan
-            Sevabhavi Sanstha, we offer undergraduate programs in Science and
-            Arts with experienced faculty and a supportive learning environment.
-          </p>
+    <p>
+      Affiliated to SNDT Women's University and run by Vidyaniketan
+      Sevabhavi Sanstha.
+    </p>
 
-          <br />
+    <br />
 
-          <Link to="/about" className="btn btn-primary">
-            Read More
-          </Link>
-        </div>
+    <Link to="/about" className="btn btn-primary">
+      Read More
+    </Link>
+  </div>
 
-        <div className="about-image">
-          <div className="image-placeholder">🏫</div>
-        </div>       
-      </section>
+  <div className="about-image">
+    <div className="image-placeholder">🏫</div>
+  </div>
+</section>
 
       {/* Why Choose Us */}
       <section className="features">
