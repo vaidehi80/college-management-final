@@ -73,7 +73,7 @@ const Home = () => {
       {/* Stats */}
       <section className="stats">
         <div className="stat-card">
-          <h2>700+</h2>
+          <h2>500+</h2>
           <p>Students Enrolled</p>
         </div>
         <div className="stat-card">
