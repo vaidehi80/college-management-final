@@ -9,7 +9,7 @@ const admissionSchema = new mongoose.Schema({
   gender: { type: String },
   category: { type: String },
 
-  // New fields
+  // Married fields
   isMarried: { type: Boolean, default: false },
   husbandName: { type: String },
   guardianName: { type: String },
@@ -56,9 +56,9 @@ const admissionSchema = new mongoose.Schema({
   casteCertificate: { type: String, default: '' },
   casteValidityCertificate: { type: String, default: '' },
 
-  course: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Course' 
+  course: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Course'
   },
 
   preferredSubject: { type: String },
@@ -80,10 +80,10 @@ const admissionSchema = new mongoose.Schema({
     default: 'pending'
   },
 
-  appliedDate: { 
-    type: Date, 
-    default: Date.now 
-  },
+  appliedDate: {
+    type: Date,
+    default: Date.now
+  }
 
 }, { timestamps: true });
 
