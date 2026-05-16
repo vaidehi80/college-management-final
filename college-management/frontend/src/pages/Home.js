@@ -85,7 +85,7 @@ const Home = () => {
                 <strong>Kalpana Chawla</strong>
                 <span>1962 — 2003 • First Indian Woman in Space</span>
               </div>
-            </div>
+           
 
             <div className="inspiration-text">
               <span className="section-tag">Our Inspiration</span>
@@ -168,8 +168,7 @@ const Home = () => {
 
         <div className="about-image">
           <div className="image-placeholder">🏫</div>
-        </div>
-              </div>
+        </div>       
       </section>
 
       {/* Why Choose Us */}
