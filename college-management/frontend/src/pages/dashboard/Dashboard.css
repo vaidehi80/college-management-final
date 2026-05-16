@@ -509,3 +509,35 @@
   border-radius: 8px;
   border: 2px solid #ddd;
 }
+
+
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 10px;
+}
+
+.sidebar-logo-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: white;
+}
+
+.sidebar-college {
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.sidebar-role {
+  color: #dbeafe;
+  font-size: 12px;
+  margin-top: 4px;
+  line-height: 1.2;
+}
