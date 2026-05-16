@@ -67,29 +67,36 @@ const Home = () => {
       </section>
 
       {/* Stats */}
-      <section className="stats">
-        <div className="container">
-          <div className="stats-grid">
-            <div className="stat-card">
-              <h2>500+</h2>
-              <p>Students Enrolled</p>
-            </div>
-            <div className="stat-card">
-              <h2>30+</h2>
-              <p>Expert Faculty</p>
-            </div>
-            <div className="stat-card">
-              <h2>2+</h2>
-              <p>Courses Offered</p>
-            </div>
-            <div className="stat-card">
-              <h2>10+</h2>
-              <p>Years of Excellence</p>
-            </div>
+     {/* Stats */}
+      <section className="stats" style={{padding: '60px 20px', background: '#f9f9f9'}}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          gap: '30px',
+          textAlign: 'center'
+        }}>
+          <div style={{flex: '1', minWidth: '180px'}}>
+            <p style={{fontSize: '16px', color: '#555', margin: '0 0 10px 0', fontWeight: '500'}}>Students Enrolled</p>
+            <h2 style={{fontSize: '48px', color: '#1565C0', margin: 0, fontWeight: 'bold'}}>500+</h2>
+          </div>
+          <div style={{flex: '1', minWidth: '180px'}}>
+            <p style={{fontSize: '16px', color: '#555', margin: '0 0 10px 0', fontWeight: '500'}}>Expert Faculty</p>
+            <h2 style={{fontSize: '48px', color: '#1565C0', margin: 0, fontWeight: 'bold'}}>30+</h2>
+          </div>
+          <div style={{flex: '1', minWidth: '180px'}}>
+            <p style={{fontSize: '16px', color: '#555', margin: '0 0 10px 0', fontWeight: '500'}}>Courses Offered</p>
+            <h2 style={{fontSize: '48px', color: '#1565C0', margin: 0, fontWeight: 'bold'}}>2+</h2>
+          </div>
+          <div style={{flex: '1', minWidth: '180px'}}>
+            <p style={{fontSize: '16px', color: '#555', margin: '0 0 10px 0', fontWeight: '500'}}>Years of Excellence</p>
+            <h2 style={{fontSize: '48px', color: '#1565C0', margin: 0, fontWeight: 'bold'}}>10+</h2>
           </div>
         </div>
       </section>
-
       {/* About Preview */}
       <section className="about-preview">
         <div className="container">
