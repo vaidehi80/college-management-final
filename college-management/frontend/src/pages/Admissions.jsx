@@ -74,6 +74,8 @@ const Admissions = () => {
     bloodGroup: '', religion: '', nationality: 'Indian',
     isMarried: false,
 
+    husbandName: '',
+    guardianName: '',
     // Aadhar
     aadharNumber: '', aadharName: '',
 
@@ -750,7 +752,40 @@ const Admissions = () => {
                     </div>
                   </div>
 
-                  {/* ===== ADDRESS WITH CITY AUTOCOMPLETE ===== */}
+                 {/* Show Husband Name only if married */}
+{formData.isMarried && (
+  <div className="form-group">
+    <label>Husband Name</label>
+    <input
+      type="text"
+      value={formData.husbandName || ''}
+      onChange={(e) =>
+        setFormData({
+          ...formData,
+          husbandName: e.target.value
+        })
+      }
+      placeholder="Enter Husband Name"
+    />
+  </div>
+)}
+
+{/* Guardian Name */}
+<div className="form-group">
+  <label>Guardian Name</label>
+  <input
+    type="text"
+    value={formData.guardianName || ''}
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        guardianName: e.target.value
+      })
+    }
+    placeholder="Enter Guardian Name"
+  />
+</div> 
+                   {/* ===== ADDRESS WITH CITY AUTOCOMPLETE ===== */}
                   <div className="form-section">
                     <h3 className="form-section-title">🏠 Address Details</h3>
 
