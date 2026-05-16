@@ -36,7 +36,7 @@ const Home = () => {
       </div>
       <div className="trust-divider"></div>
       <div className="trust-item">
-        <strong>25+</strong>
+        <strong>26+</strong>
         <span>Faculty</span>
       </div>
       <div className="trust-divider"></div>
